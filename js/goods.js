@@ -105,6 +105,7 @@ var getRandomBoolean = function () {
 var getRandomNumberValues = function (array) {
   var productComposition = '';
   var randomNumber = getRandomInRange(1, array.length - 1);
+  var i = 0;
   while (i < randomNumber) {
     productComposition += getRandomItem(array);
   }
@@ -116,13 +117,16 @@ var getRandomNumberValues = function (array) {
 var generatingArrayProducts = function (argument) {
   var arrayProducts = [];
   for (var i = 0; i < 26; i++) {
+    arrayProducts[i] = {};
     arrayProducts[i].name = getRandomItem(names);
     arrayProducts[i].picture = 'img/cards' + getRandomItem(photo) + 'jpg';
     arrayProducts[i].amount = i;
     arrayProducts[i].price = getRandomInRange(100, 1500);
     arrayProducts[i].weight = getRandomInRange(30, 300);
+    arrayProducts[i].rating = {};
     arrayProducts[i].rating.value = getRandomInRange(1, 5);
     arrayProducts[i].rating.number = getRandomInRange(1, 900);
+    arrayProducts[i].nutritionFacts = {};
     arrayProducts[i].nutritionFacts.sugar = getRandomBoolean();
     arrayProducts[i].nutritionFacts.energy = getRandomInRange(70, 500);
     arrayProducts[i].nutritionFacts.contents = getRandomNumberValues(ingredients);
