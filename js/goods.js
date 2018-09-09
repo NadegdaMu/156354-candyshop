@@ -1,4 +1,8 @@
 'use strict';
+var goods = document.querySelector('.catalog__card');
+var ratingGoods = document.querySelector('.card__rating');
+document.querySelector('.catalog__cards').classList.remove('catalog__cards--load');
+document.querySelector('.catalog__load').classList.add('visually-hidden');
 
 var names = [
   'Чесночные сливки',
@@ -83,36 +87,71 @@ var photo = [
   'soda-russian'
 ];
 
-// функция возвращающая случайный елемент массива
+// Массив товаром в корзине
+var goddsBasket = [];
+
+// Функция возвращающая случайный елемент массива
 var getRandomItem = function (array) {
   var randomIndex = array[Math.floor(Math.random() * (array.length))];
   return randomIndex;
 };
 
 
-// функция генерирующая целое число в диапазоне, включая минимальное и максимальное.
+// Функция генерирующая целое число в диапазоне, включая минимальное и максимальное.
 var getRandomInRange = function (min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
-// функция, генерирующая случайное булевое значение
+// Функция, генерирующая случайное булевое значение
 var getRandomBoolean = function () {
   var someNumber = getRandomInRange (1, 10);
   return (someNumber > 5) ? true : false;
 };
 
-// функция, генерирующая произвольное колличество значений
+// Функция, генерирующая произвольное колличество значений
 var getRandomNumberValues = function (array) {
   var productComposition = '';
   var randomNumber = getRandomInRange(1, array.length - 1);
   var i = 0;
   while (i < randomNumber) {
     productComposition += getRandomItem(array);
+    i++;
   }
   return productComposition;
 };
 
-// функция, для создания массива из 26 сгенерированных объектов.
+// Функция, определящая какой класс выбирается в зависимости от рейтинга
+var getRatingGoods = function (array) {
+  var value = array.rating.value;
+  switch (value) {
+    case 1:
+    return ratingGoods.classList.add('.stars__rating--one');
+    break;
+    case 2:
+    return ratingGoods.classList.add('.stars__rating--two');
+    break;
+    case 3:
+    return ratingGoods.classList.add('.stars__rating--three');
+    break;
+    case 4:
+    return ratingGoods.classList.add('.stars__rating--four');
+    break;
+    default:
+    return ratingGoods.classList.add('.stars__rating--five');
+  }
+};
+
+//Функция, возвращающая определеную строку в зависимости от булевого значения
+var strokeNutritionFacts = function (array) {
+  var strokeSugar = '';
+  if (array.nutritionFacts.sugar === true) {
+    strokeSugar = 'Содержит сахар';
+  }
+  strokeSugar = 'Без сахара';
+  return strokeSugar;
+};
+
+// Функция, для создания массива из 26 сгенерированных объектов.
 // Каждый объект массива представляет собой описание товара
 var generatingArrayProducts = function (argument) {
   var arrayProducts = [];
@@ -131,7 +170,23 @@ var generatingArrayProducts = function (argument) {
     arrayProducts[i].nutritionFacts.energy = getRandomInRange(70, 500);
     arrayProducts[i].nutritionFacts.contents = getRandomNumberValues(ingredients);
   }
-  return ArrayProducts;
+  return arrayProducts;
 };
 
 var products = generatingArrayProducts();
+
+// Функция отрисовки карточеки необычного товара
+var renderItemCard = function (datasCard) {
+  var goodsElement = goods.cloneNode(true);
+  goodsElement.querySelector('.card__price').textContent = datasCard.price;
+  goodsElement.querySelector('.card__weight').textContent = datasCard.weight;
+  getRatingGoods(datasCard);
+  goodsElement.querySelector('.star__count').textContent = datasCard.rating.number;
+  goodsElement.querySelector('.card__characteristic').textContent = strokeNutritionFacts(datasCard);
+};
+
+var fragment = document.createDocumentFragment();
+products.forEach(function (element) {
+  fragment.appendChild(renderItemCard(element));
+});
+goods.appendChild(fragment);
