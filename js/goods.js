@@ -189,22 +189,23 @@ console.log(products);
   goodsElement.querySelector('.card__characteristic').textContent = strokeNutritionFacts(datasCard);
   return goodsElement;
 };*/
-var goodsElement = catalogTemplate.cloneNode(true);
+
 var renderItemCard = function (datasCard, element) {
-  element.querySelector('.card__title').textContent = datasCard.name;
-  element.querySelector('.card__img').src = datasCard.picture;
-  element.querySelector('.card__price').firstChild.nodeValue = datasCard.price;
-  element.querySelector('.card__weight').textContent = datasCard.weight + 'г';
-  var ratingGoods = element.querySelector('.stars__rating');
+  var goodsElement = element.cloneNode(true);
+  goodsElement.querySelector('.card__title').textContent = datasCard.name;
+  goodsElement.querySelector('.card__img').src = datasCard.picture;
+  goodsElement.querySelector('.card__price').firstChild.nodeValue = datasCard.price;
+  goodsElement.querySelector('.card__weight').textContent = datasCard.weight + 'г';
+  var ratingGoods = goodsElement.querySelector('.stars__rating');
   getRatingGoods(datasCard, ratingGoods);
-  element.querySelector('.star__count').textContent = '(' + datasCard.rating.number + ')';
-  element.querySelector('.card__characteristic').textContent = strokeNutritionFacts(datasCard);
+  goodsElement.querySelector('.star__count').textContent = '(' + datasCard.rating.number + ')';
+  goodsElement.querySelector('.card__characteristic').textContent = strokeNutritionFacts(datasCard);
   return element;
 };
 
 var fragment = document.createDocumentFragment();
 products.forEach(function (element) {
-  fragment.appendChild(renderItemCard(element, goodsElement));
+  fragment.appendChild(renderItemCard(element, catalogTemplate));
 });
 goods.appendChild(fragment);
 
