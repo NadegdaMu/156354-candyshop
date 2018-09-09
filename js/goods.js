@@ -3,6 +3,7 @@ var goods = document.querySelector('.catalog__card');
 var ratingGoods = document.querySelector('.card__rating');
 document.querySelector('.catalog__cards').classList.remove('catalog__cards--load');
 document.querySelector('.catalog__load').classList.add('visually-hidden');
+var catalogTemplate = document.querySelector('#card').content.querySelector('.catalog__card');
 
 var names = [
   'Чесночные сливки',
@@ -174,10 +175,11 @@ var generatingArrayProducts = function (argument) {
 };
 
 var products = generatingArrayProducts();
+console.log(products);
 
 // Функция отрисовки карточеки необычного товара
 var renderItemCard = function (datasCard) {
-  var goodsElement = goods.cloneNode(true);
+  var goodsElement = catalogTemplate.cloneNode(true);
   goodsElement.querySelector('.card__price').textContent = datasCard.price;
   goodsElement.querySelector('.card__weight').textContent = datasCard.weight;
   getRatingGoods(datasCard);
