@@ -177,7 +177,7 @@ var products = generatingArrayProducts(26);
 console.log(products);
 
 // Функция отрисовки карточки необычного товара
-/*var renderItemCard = function (datasCard) {
+var renderItemCard = function (datasCard) {
   var goodsElement = catalogTemplate.cloneNode(true);
   goodsElement.querySelector('.card__title').textContent = datasCard.name;
   goodsElement.querySelector('.card__img').src = datasCard.picture;
@@ -188,33 +188,24 @@ console.log(products);
   goodsElement.querySelector('.star__count').textContent = '(' + datasCard.rating.number + ')';
   goodsElement.querySelector('.card__characteristic').textContent = strokeNutritionFacts(datasCard);
   return goodsElement;
-};*/
-
-var renderItemCard = function (datasCard, element) {
-  var goodsElement = element.cloneNode(true);
-  goodsElement.querySelector('.card__title').textContent = datasCard.name;
-  goodsElement.querySelector('.card__img').src = datasCard.picture;
-  goodsElement.querySelector('.card__price').firstChild.nodeValue = datasCard.price;
-  goodsElement.querySelector('.card__weight').textContent = datasCard.weight + 'г';
-  var ratingGoods = goodsElement.querySelector('.stars__rating');
-  getRatingGoods(datasCard, ratingGoods);
-  goodsElement.querySelector('.star__count').textContent = '(' + datasCard.rating.number + ')';
-  goodsElement.querySelector('.card__characteristic').textContent = strokeNutritionFacts(datasCard);
-  return element;
 };
 
 var fragment = document.createDocumentFragment();
 products.forEach(function (element) {
-  fragment.appendChild(renderItemCard(element, catalogTemplate));
+  fragment.appendChild(renderItemCard(element));
 });
 goods.appendChild(fragment);
 
 //Корзина товаров
+var basketGoods = document.querySelector('.goods__cards');
+var basketGood = basketGoods.querySelector('.goods__card-empty');
 var basketTemplate = document.querySelector('#card').content.querySelector('.catalog__card');
+basketGoods.classList.remove('goods__cards--empty');
+basketGood.classList.add('visually-hidden');
 
 var basketItems = generatingArrayProducts(3);
 var fragment = document.createDocumentFragment();
 basketItems.forEach(function (element) {
   fragment.appendChild(renderItemCard(element));
 });
-goods.appendChild(fragment);
+basketGoods.appendChild(fragment);
