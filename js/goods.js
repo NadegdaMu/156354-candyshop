@@ -35,7 +35,7 @@ var names = [
   'Острый язычок'
 ];
 
-var  ingredients = [
+var ingredients = [
   'молоко',
   'сливки',
   'вода',
@@ -87,9 +87,6 @@ var photo = [
   'soda-russian'
 ];
 
-// Массив товаром в корзине
-var goddsBasket = [];
-
 // Функция возвращающая случайный елемент массива
 var getRandomItem = function (array) {
   var randomIndex = array[Math.floor(Math.random() * (array.length))];
@@ -104,7 +101,7 @@ var getRandomInRange = function (min, max) {
 
 // Функция, генерирующая случайное булевое значение
 var getRandomBoolean = function () {
-  var someNumber = getRandomInRange (1, 10);
+  var someNumber = getRandomInRange(1, 10);
   return (someNumber > 5) ? true : false;
 };
 
@@ -125,23 +122,19 @@ var getRatingGoods = function (array, element) {
   var value = array.rating.value;
   switch (value) {
     case 1:
-    return element.classList.add('stars__rating--one');
-    break;
+      return element.classList.add('stars__rating--one');
     case 2:
-    return element.classList.add('stars__rating--two');
-    break;
+      return element.classList.add('stars__rating--two');
     case 3:
-    return element.classList.add('stars__rating--three');
-    break;
+      return element.classList.add('stars__rating--three');
     case 4:
-    return element.classList.add('stars__rating--four');
-    break;
+      return element.classList.add('stars__rating--four');
     default:
-    return element.classList.add('stars__rating--five');
+      return element.classList.add('stars__rating--five');
   }
 };
 
-//Функция, возвращающая определеную строку в зависимости от булевого значения
+// Функция, возвращающая определеную строку в зависимости от булевого значения
 var strokeNutritionFacts = function (array) {
   var strokeSugar = '';
   if (array.nutritionFacts.sugar === true) {
@@ -195,15 +188,13 @@ products.forEach(function (element) {
 });
 goods.appendChild(fragment);
 
-//Корзина товаров
+// Корзина товаров
 var basketGoods = document.querySelector('.goods__cards');
 var basketGood = basketGoods.querySelector('.goods__card-empty');
-var basketTemplate = document.querySelector('#card').content.querySelector('.catalog__card');
 basketGoods.classList.remove('goods__cards--empty');
 basketGood.classList.add('visually-hidden');
 
 var basketItems = generatingArrayProducts(3);
-var fragment = document.createDocumentFragment();
 basketItems.forEach(function (element) {
   fragment.appendChild(renderItemCard(element));
 });
