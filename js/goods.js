@@ -125,19 +125,19 @@ var getRatingGoods = function (array, element) {
   var value = array.rating.value;
   switch (value) {
     case 1:
-    return element.classList.add('.stars__rating--one');
+    return element.classList.add('stars__rating--one');
     break;
     case 2:
-    return element.classList.add('.stars__rating--two');
+    return element.classList.add('stars__rating--two');
     break;
     case 3:
-    return element.classList.add('.stars__rating--three');
+    return element.classList.add('stars__rating--three');
     break;
     case 4:
-    return element.classList.add('.stars__rating--four');
+    return element.classList.add('stars__rating--four');
     break;
     default:
-    return element.classList.add('.stars__rating--five');
+    return element.classList.add('stars__rating--five');
   }
 };
 
@@ -174,14 +174,13 @@ var generatingArrayProducts = function (lengthArray) {
 };
 
 var products = generatingArrayProducts(26);
-console.log(products);
 
 // Функция отрисовки карточки необычного товара
 var renderItemCard = function (datasCard) {
   var goodsElement = catalogTemplate.cloneNode(true);
   goodsElement.querySelector('.card__title').textContent = datasCard.name;
   goodsElement.querySelector('.card__img').src = datasCard.picture;
-  goodsElement.querySelector('.card__price').firstChild.nodeValue = datasCard.price;
+  goodsElement.querySelector('.card__price').firstChild.textContent = datasCard.price;
   goodsElement.querySelector('.card__weight').textContent = datasCard.weight + 'г';
   var ratingGoods = goodsElement.querySelector('.stars__rating');
   getRatingGoods(datasCard, ratingGoods);
