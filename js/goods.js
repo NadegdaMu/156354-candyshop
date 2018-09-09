@@ -1,6 +1,5 @@
 'use strict';
-var goods = document.querySelector('.catalog__card');
-var ratingGoods = document.querySelector('.card__rating');
+var goods = document.querySelector('.catalog__cards');
 document.querySelector('.catalog__cards').classList.remove('catalog__cards--load');
 document.querySelector('.catalog__load').classList.add('visually-hidden');
 var catalogTemplate = document.querySelector('#card').content.querySelector('.catalog__card');
@@ -122,23 +121,23 @@ var getRandomNumberValues = function (array) {
 };
 
 // Функция, определящая какой класс выбирается в зависимости от рейтинга
-var getRatingGoods = function (array) {
+var getRatingGoods = function (array, element) {
   var value = array.rating.value;
   switch (value) {
     case 1:
-    return ratingGoods.classList.add('.stars__rating--one');
+    return element.classList.add('.stars__rating--one');
     break;
     case 2:
-    return ratingGoods.classList.add('.stars__rating--two');
+    return element.classList.add('.stars__rating--two');
     break;
     case 3:
-    return ratingGoods.classList.add('.stars__rating--three');
+    return element.classList.add('.stars__rating--three');
     break;
     case 4:
-    return ratingGoods.classList.add('.stars__rating--four');
+    return element.classList.add('.stars__rating--four');
     break;
     default:
-    return ratingGoods.classList.add('.stars__rating--five');
+    return element.classList.add('.stars__rating--five');
   }
 };
 
@@ -154,12 +153,12 @@ var strokeNutritionFacts = function (array) {
 
 // Функция, для создания массива из 26 сгенерированных объектов.
 // Каждый объект массива представляет собой описание товара
-var generatingArrayProducts = function (argument) {
+var generatingArrayProducts = function (lengthArray) {
   var arrayProducts = [];
-  for (var i = 0; i < 26; i++) {
+  for (var i = 0; i < lengthArray; i++) {
     arrayProducts[i] = {};
     arrayProducts[i].name = getRandomItem(names);
-    arrayProducts[i].picture = 'img/cards' + getRandomItem(photo) + 'jpg';
+    arrayProducts[i].picture = 'img/cards/' + getRandomItem(photo) + '.jpg';
     arrayProducts[i].amount = i;
     arrayProducts[i].price = getRandomInRange(100, 1500);
     arrayProducts[i].weight = getRandomInRange(30, 300);
@@ -174,21 +173,47 @@ var generatingArrayProducts = function (argument) {
   return arrayProducts;
 };
 
-var products = generatingArrayProducts();
+var products = generatingArrayProducts(26);
 console.log(products);
 
-// Функция отрисовки карточеки необычного товара
-var renderItemCard = function (datasCard) {
+// Функция отрисовки карточки необычного товара
+/*var renderItemCard = function (datasCard) {
   var goodsElement = catalogTemplate.cloneNode(true);
-  goodsElement.querySelector('.card__price').textContent = datasCard.price;
-  goodsElement.querySelector('.card__weight').textContent = datasCard.weight;
-  getRatingGoods(datasCard);
-  goodsElement.querySelector('.star__count').textContent = datasCard.rating.number;
+  goodsElement.querySelector('.card__title').textContent = datasCard.name;
+  goodsElement.querySelector('.card__img').src = datasCard.picture;
+  goodsElement.querySelector('.card__price').firstChild.nodeValue = datasCard.price;
+  goodsElement.querySelector('.card__weight').textContent = datasCard.weight + 'г';
+  var ratingGoods = goodsElement.querySelector('.stars__rating');
+  getRatingGoods(datasCard, ratingGoods);
+  goodsElement.querySelector('.star__count').textContent = '(' + datasCard.rating.number + ')';
   goodsElement.querySelector('.card__characteristic').textContent = strokeNutritionFacts(datasCard);
+  return goodsElement;
+};*/
+var goodsElement = catalogTemplate.cloneNode(true);
+var renderItemCard = function (datasCard, element) {
+  element.querySelector('.card__title').textContent = datasCard.name;
+  element.querySelector('.card__img').src = datasCard.picture;
+  element.querySelector('.card__price').firstChild.nodeValue = datasCard.price;
+  element.querySelector('.card__weight').textContent = datasCard.weight + 'г';
+  var ratingGoods = element.querySelector('.stars__rating');
+  getRatingGoods(datasCard, ratingGoods);
+  element.querySelector('.star__count').textContent = '(' + datasCard.rating.number + ')';
+  element.querySelector('.card__characteristic').textContent = strokeNutritionFacts(datasCard);
+  return element;
 };
 
 var fragment = document.createDocumentFragment();
 products.forEach(function (element) {
+  fragment.appendChild(renderItemCard(element, goodsElement));
+});
+goods.appendChild(fragment);
+
+//Корзина товаров
+var basketTemplate = document.querySelector('#card').content.querySelector('.catalog__card');
+
+var basketItems = generatingArrayProducts(3);
+var fragment = document.createDocumentFragment();
+basketItems.forEach(function (element) {
   fragment.appendChild(renderItemCard(element));
 });
 goods.appendChild(fragment);
