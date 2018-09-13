@@ -118,20 +118,16 @@ var getRandomNumberValues = function (array) {
 };
 
 // Функция, определящая какой класс выбирается в зависимости от рейтинга
-var getRatingGoods = function (array, element) {
-  var value = array.rating.value;
-  switch (value) {
-    case 1:
-      return element.classList.add('stars__rating--one');
-    case 2:
-      return element.classList.add('stars__rating--two');
-    case 3:
-      return element.classList.add('stars__rating--three');
-    case 4:
-      return element.classList.add('stars__rating--four');
-    default:
-      return element.classList.add('stars__rating--five');
-  }
+var ratingMap = {
+  1: "one",
+  2: "two",
+  3: "three",
+  4: "four",
+  5: "five"
+}
+
+var getRatingGoods = function (value, element) {
+  element.classList.add('stars__rating--' + ratingMap[value]);
 };
 
 // Функция, возвращающая определеную строку в зависимости от булевого значения
@@ -144,24 +140,30 @@ var strokeNutritionFacts = function (array) {
   return strokeSugar;
 };
 
+// Функция, генерирующая один продукт
+var itemProducts = function (i) {
+  var product = {};
+  product.name = getRandomItem(names);
+  product.picture = 'img/cards/' + getRandomItem(photo) + '.jpg';
+  product.amount = i;
+  product.price = getRandomInRange(100, 1500);
+  product.weight = getRandomInRange(30, 300);
+  product.rating = {};
+  product.rating.value = getRandomInRange(1, 5);
+  product.rating.number = getRandomInRange(1, 900);
+  product.nutritionFacts = {};
+  product.nutritionFacts.sugar = getRandomBoolean();
+  product.nutritionFacts.energy = getRandomInRange(70, 500);
+  product.nutritionFacts.contents = getRandomNumberValues(ingredients);
+  return product;
+};
+
 // Функция, для создания массива из 26 сгенерированных объектов.
 // Каждый объект массива представляет собой описание товара
 var generatingArrayProducts = function (lengthArray) {
   var arrayProducts = [];
   for (var i = 0; i < lengthArray; i++) {
-    arrayProducts[i] = {};
-    arrayProducts[i].name = getRandomItem(names);
-    arrayProducts[i].picture = 'img/cards/' + getRandomItem(photo) + '.jpg';
-    arrayProducts[i].amount = i;
-    arrayProducts[i].price = getRandomInRange(100, 1500);
-    arrayProducts[i].weight = getRandomInRange(30, 300);
-    arrayProducts[i].rating = {};
-    arrayProducts[i].rating.value = getRandomInRange(1, 5);
-    arrayProducts[i].rating.number = getRandomInRange(1, 900);
-    arrayProducts[i].nutritionFacts = {};
-    arrayProducts[i].nutritionFacts.sugar = getRandomBoolean();
-    arrayProducts[i].nutritionFacts.energy = getRandomInRange(70, 500);
-    arrayProducts[i].nutritionFacts.contents = getRandomNumberValues(ingredients);
+    arrayProducts[i] = itemProducts(i);
   }
   return arrayProducts;
 };
@@ -176,7 +178,7 @@ var renderItemCard = function (datasCard) {
   goodsElement.querySelector('.card__price').firstChild.textContent = datasCard.price;
   goodsElement.querySelector('.card__weight').textContent = datasCard.weight + 'г';
   var ratingGoods = goodsElement.querySelector('.stars__rating');
-  getRatingGoods(datasCard, ratingGoods);
+  getRatingGoods(datasCard.rating.value, ratingGoods);
   goodsElement.querySelector('.star__count').textContent = '(' + datasCard.rating.number + ')';
   goodsElement.querySelector('.card__characteristic').textContent = strokeNutritionFacts(datasCard);
   return goodsElement;
