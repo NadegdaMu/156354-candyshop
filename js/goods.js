@@ -207,11 +207,15 @@ var buttonCardFavorite = document.querySelectorAll('.card__btn-favorite');
 
 var buttonClickHandler = function () {
   var buttonTarget = buttonCardFavorite.target;
+  console.log(buttonTarget);
   buttonTarget.classList.toggle('card__btn-favorite--selected', true);
 };
 
-buttonCardFavorite.addEventListener('click', buttonClickHandler);
+//buttonCardFavorite.addEventListener('click', buttonClickHandler);
 
+buttonCardFavorite.forEach(function (element) {
+  element.addEventListener('click', buttonClickHandler);
+});
 // Добавление выбранного товара в корзину;
 // Удаление товара из корзины;
 // Управление количеством определенного товара в корзине;
