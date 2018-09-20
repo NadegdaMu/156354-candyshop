@@ -203,10 +203,11 @@ basketItems.forEach(function (element) {
 basketGoods.appendChild(fragment);
 
 // Добавление выбранного товара в избранное;
-var buttonCardFavorite = document.querySelector('card__btn-favorite');
+var buttonCardFavorite = document.querySelectorAll('.card__btn-favorite');
 
 var buttonClickHandler = function () {
-  buttonCardFavorite.classList.toggle('card__btn-favorite--selected', true);
+  var buttonTarget = buttonCardFavorite.target;
+  buttonTarget.classList.toggle('card__btn-favorite--selected', true);
 };
 
 buttonCardFavorite.addEventListener('click', buttonClickHandler);
