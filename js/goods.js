@@ -119,12 +119,12 @@ var getRandomNumberValues = function (array) {
 
 // Функция, определящая какой класс выбирается в зависимости от рейтинга
 var ratingMap = {
-  1: "one",
-  2: "two",
-  3: "three",
-  4: "four",
-  5: "five"
-}
+  1: 'one',
+  2: 'two',
+  3: 'three',
+  4: 'four',
+  5: 'five'
+};
 
 var getRatingGoods = function (value, element) {
   element.classList.add('stars__rating--' + ratingMap[value]);
@@ -205,13 +205,10 @@ basketGoods.appendChild(fragment);
 // Добавление выбранного товара в избранное;
 var buttonCardFavorite = document.querySelectorAll('.card__btn-favorite');
 
-var buttonClickHandler = function () {
-  var buttonTarget = buttonCardFavorite.target;
-  console.log(buttonTarget);
+var buttonClickHandler = function (event) {
+  var buttonTarget = event.target;
   buttonTarget.classList.toggle('card__btn-favorite--selected', true);
 };
-
-//buttonCardFavorite.addEventListener('click', buttonClickHandler);
 
 buttonCardFavorite.forEach(function (element) {
   element.addEventListener('click', buttonClickHandler);
