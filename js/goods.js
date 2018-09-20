@@ -201,3 +201,19 @@ basketItems.forEach(function (element) {
   fragment.appendChild(renderItemCard(element));
 });
 basketGoods.appendChild(fragment);
+
+// Добавление выбранного товара в избранное;
+var buttonCardFavorite = document.querySelector('card__btn-favorite');
+
+var buttonClickHandler = function () {
+  buttonCardFavorite.classList.toggle('card__btn-favorite--selected', true);
+};
+
+buttonCardFavorite.addEventListener('click', buttonClickHandler);
+
+// Добавление выбранного товара в корзину;
+// Удаление товара из корзины;
+// Управление количеством определенного товара в корзине;
+// Переключение вкладок в форме оформления заказа;
+// Первая фаза работы фильтра по цене.
+
