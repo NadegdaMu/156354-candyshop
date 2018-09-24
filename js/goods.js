@@ -3,7 +3,6 @@ var goods = document.querySelector('.catalog__cards');
 document.querySelector('.catalog__cards').classList.remove('catalog__cards--load');
 document.querySelector('.catalog__load').classList.add('visually-hidden');
 var catalogTemplate = document.querySelector('#card').content.querySelector('.catalog__card');
-var buttonProductSelection = goods.querySelectorAll('.card__btn');
 
 var names = [
   'Чесночные сливки',
@@ -226,10 +225,9 @@ var buttonClickSelection = function (event) {
   var product = getNewProduct(products[buttonTargetSelection]);
   shoppingСart.push(product);
   shoppingСart.forEach(function (element) {
-  fragment.appendChild(renderItemCard(element));
+    fragment.appendChild(renderItemCard(element));
   });
   basketGoods.appendChild(fragment);
-
 };
 
 buttonProductSelection.forEach(function (element) {
