@@ -3,7 +3,7 @@ var goods = document.querySelector('.catalog__cards');
 document.querySelector('.catalog__cards').classList.remove('catalog__cards--load');
 document.querySelector('.catalog__load').classList.add('visually-hidden');
 var catalogTemplate = document.querySelector('#card').content.querySelector('.catalog__card');
-var buttonProductSelection = goods.querySelector('.card__btn');
+var buttonProductSelection = goods.querySelectorAll('.card__btn');
 
 var names = [
   'Чесночные сливки',
@@ -209,7 +209,9 @@ var buttonClickHandler = function (event) {
 buttonCardFavorite.forEach(function (element) {
   element.addEventListener('click', buttonClickHandler);
 });
+
 // Добавление выбранного товара в корзину;
+var buttonProductSelection = goods.querySelectorAll('.card__btn');
 var shoppingСart = [];
 
 var getNewProduct = function (selectedProduct) {
@@ -223,14 +225,16 @@ var buttonClickSelection = function (event) {
   var buttonTargetSelection = event.target.id;
   var product = getNewProduct(products[buttonTargetSelection]);
   shoppingСart.push(product);
+  shoppingСart.forEach(function (element) {
+  fragment.appendChild(renderItemCard(element));
+  });
+  basketGoods.appendChild(fragment);
+
 };
 
-buttonProductSelection.addEventListener('click', buttonClickSelection);
-
-shoppingСart.forEach(function (element) {
-  fragment.appendChild(renderItemCard(element));
+buttonProductSelection.forEach(function (element) {
+  element.addEventListener('click', buttonClickSelection);
 });
-// basketGoods.appendChild(fragment);
 
 // Удаление товара из корзины;
 // Управление количеством определенного товара в корзине;
