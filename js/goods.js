@@ -3,6 +3,7 @@ var goods = document.querySelector('.catalog__cards');
 document.querySelector('.catalog__cards').classList.remove('catalog__cards--load');
 document.querySelector('.catalog__load').classList.add('visually-hidden');
 var catalogTemplate = document.querySelector('#card').content.querySelector('.catalog__card');
+var buttonProductSelection = goods.querySelector('.card__btn');
 
 var names = [
   'Чесночные сливки',
@@ -171,7 +172,7 @@ var generatingArrayProducts = function (lengthArray) {
 var products = generatingArrayProducts(26);
 
 // Функция отрисовки карточки необычного товара
-var renderItemCard = function (datasCard) {
+var renderItemCard = function (datasCard, id) {
   var goodsElement = catalogTemplate.cloneNode(true);
   goodsElement.querySelector('.card__title').textContent = datasCard.name;
   goodsElement.querySelector('.card__img').src = datasCard.picture;
@@ -181,12 +182,13 @@ var renderItemCard = function (datasCard) {
   getRatingGoods(datasCard.rating.value, ratingGoods);
   goodsElement.querySelector('.star__count').textContent = '(' + datasCard.rating.number + ')';
   goodsElement.querySelector('.card__characteristic').textContent = strokeNutritionFacts(datasCard);
+  goodsElement.querySelector('.card__btn').setAttribute('id', id);
   return goodsElement;
 };
 
 var fragment = document.createDocumentFragment();
-products.forEach(function (element) {
-  fragment.appendChild(renderItemCard(element));
+products.forEach(function (element, index) {
+  fragment.appendChild(renderItemCard(element, index));
 });
 goods.appendChild(fragment);
 
@@ -196,26 +198,41 @@ var basketGood = basketGoods.querySelector('.goods__card-empty');
 basketGoods.classList.remove('goods__cards--empty');
 basketGood.classList.add('visually-hidden');
 
-var basketItems = generatingArrayProducts(3);
-basketItems.forEach(function (element) {
-  fragment.appendChild(renderItemCard(element));
-});
-basketGoods.appendChild(fragment);
-
 // Добавление выбранного товара в избранное;
 var buttonCardFavorite = document.querySelectorAll('.card__btn-favorite');
 
 var buttonClickHandler = function (event) {
   var buttonTarget = event.target;
-  buttonTarget.classList.toggle('card__btn-favorite--selected', true);
+  buttonTarget.classList.toggle('card__btn-favorite--selected');
 };
 
 buttonCardFavorite.forEach(function (element) {
   element.addEventListener('click', buttonClickHandler);
 });
 // Добавление выбранного товара в корзину;
+var shoppingСart = [];
+
+var getNewProduct = function (selectedProduct) {
+  var newProduct = Object.assign({}, selectedProduct);
+  delete newProduct.amount;
+  newProduct.orderedAmount = 0;
+  return newProduct;
+};
+
+var buttonClickSelection = function (event) {
+  var buttonTargetSelection = event.target.id;
+  var product = getNewProduct(products[buttonTargetSelection]);
+  shoppingСart.push(product);
+};
+
+buttonProductSelection.addEventListener('click', buttonClickSelection);
+
+shoppingСart.forEach(function (element) {
+  fragment.appendChild(renderItemCard(element));
+});
+// basketGoods.appendChild(fragment);
+
 // Удаление товара из корзины;
 // Управление количеством определенного товара в корзине;
 // Переключение вкладок в форме оформления заказа;
 // Первая фаза работы фильтра по цене.
-
