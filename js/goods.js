@@ -219,6 +219,7 @@ var getNewProduct = function (selectedProduct) {
   var newProduct = Object.assign({}, selectedProduct);
   delete newProduct.amount;
   newProduct.orderedAmount = 1;
+  newProduct.id = 1;
   return newProduct;
 };
 
@@ -228,18 +229,29 @@ var basketCount = document.querySelector('.main-header__basket');
 var countCart = function (array) {
   var count = 0;
   for (var i = 0; i <array.length; i++) {
-    count += array.orderedAmount;
+    count += array[i].orderedAmount;
   }
   return count;
+};
+
+// Функция добавления товара в корзину или увеличения счетчика, если товар в корзине уже есть
+var checkAvailabilityGoods = function (array) {
+  for (var i = 0; i < array.length; i++) {
+    if (product[i].id) {
+      product[i].orderedAmount += 1;
+    }
+    shoppingСart.push(product[i]);
+  };
 };
 
 var buttonClickSelection = function (event) {
   var buttonTargetSelection = event.target.id;
   var product = getNewProduct(products[buttonTargetSelection]);
-  shoppingСart.push(product);
+  checkAvailabilityGoods(shoppingСart);
   shoppingСart.forEach(function (element) {
     fragment.appendChild(renderItemCard(element));
   });
+  basketGoods.textContent = ' ';
   basketGoods.appendChild(fragment);
   basketCount.textContent = countCart(shoppingСart);
 };
