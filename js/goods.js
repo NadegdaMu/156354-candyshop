@@ -215,11 +215,11 @@ var buttonProductSelection = goods.querySelectorAll('.card__btn');
 var shoppingСart = []; // Массив для товаров в корзине
 
 // Функция которая копирует ссылку объекта с одно массива и помещает в другой объект
-var getNewProduct = function (selectedProduct) {
+var getNewProduct = function (id, selectedProduct) {
   var newProduct = Object.assign({}, selectedProduct);
   delete newProduct.amount;
   newProduct.orderedAmount = 1;
-  newProduct.id = 1;
+  newProduct.id = id;
   return newProduct;
 };
 
@@ -228,26 +228,25 @@ var basketCount = document.querySelector('.main-header__basket');
 
 var countCart = function (array) {
   var count = 0;
-  for (var i = 0; i <array.length; i++) {
+  for (var i = 0; i < array.length; i++) {
     count += array[i].orderedAmount;
   }
   return count;
 };
 
-// Функция добавления товара в корзину или увеличения счетчика, если товар в корзине уже есть
-var checkAvailabilityGoods = function (array) {
-  for (var i = 0; i < array.length; i++) {
-    if (product[i].id) {
-      product[i].orderedAmount += 1;
-    }
-    shoppingСart.push(product[i]);
-  };
-};
-
 var buttonClickSelection = function (event) {
   var buttonTargetSelection = event.target.id;
-  var product = getNewProduct(products[buttonTargetSelection]);
-  checkAvailabilityGoods(shoppingСart);
+  var foundInCart = false;
+  shoppingСart.forEach(function (element) {
+    if (element.id === buttonTargetSelection) {
+      element.orderedAmount++;
+      foundInCart = true;
+    }
+  });
+  if (foundInCart === false) {
+    var product = getNewProduct(buttonTargetSelection, products[buttonTargetSelection]);
+    shoppingСart.push(product);
+  }
   shoppingСart.forEach(function (element) {
     fragment.appendChild(renderItemCard(element));
   });
