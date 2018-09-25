@@ -1,4 +1,5 @@
 'use strict';
+
 var goods = document.querySelector('.catalog__cards');
 document.querySelector('.catalog__cards').classList.remove('catalog__cards--load');
 document.querySelector('.catalog__load').classList.add('visually-hidden');
@@ -211,13 +212,25 @@ buttonCardFavorite.forEach(function (element) {
 
 // Добавление выбранного товара в корзину;
 var buttonProductSelection = goods.querySelectorAll('.card__btn');
-var shoppingСart = [];
+var shoppingСart = []; // Массив для товаров в корзине
 
+// Функция которая копирует ссылку объекта с одно массива и помещает в другой объект
 var getNewProduct = function (selectedProduct) {
   var newProduct = Object.assign({}, selectedProduct);
   delete newProduct.amount;
-  newProduct.orderedAmount = 0;
+  newProduct.orderedAmount = 1;
   return newProduct;
+};
+
+// Функция счетчика корзины в шапке
+var basketCount = document.querySelector('.main-header__basket');
+
+var countCart = function (array) {
+  var count = 0;
+  for (var i = 0; i <array.length; i++) {
+    count += array.orderedAmount;
+  }
+  return count;
 };
 
 var buttonClickSelection = function (event) {
@@ -228,6 +241,7 @@ var buttonClickSelection = function (event) {
     fragment.appendChild(renderItemCard(element));
   });
   basketGoods.appendChild(fragment);
+  basketCount.textContent = countCart(shoppingСart);
 };
 
 buttonProductSelection.forEach(function (element) {
