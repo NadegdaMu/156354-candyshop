@@ -4,6 +4,7 @@ var goods = document.querySelector('.catalog__cards');
 document.querySelector('.catalog__cards').classList.remove('catalog__cards--load');
 document.querySelector('.catalog__load').classList.add('visually-hidden');
 var catalogTemplate = document.querySelector('#card').content.querySelector('.catalog__card');
+var numberObjects = 26;
 
 var names = [
   'Чесночные сливки',
@@ -169,7 +170,7 @@ var generatingArrayProducts = function (lengthArray) {
   return arrayProducts;
 };
 
-var products = generatingArrayProducts(26);
+var products = generatingArrayProducts(numberObjects);
 
 // Функция отрисовки карточки необычного товара
 var renderItemCard = function (datasCard, id) {
@@ -202,6 +203,7 @@ basketGood.classList.add('visually-hidden');
 var buttonCardFavorite = document.querySelectorAll('.card__btn-favorite');
 
 var buttonClickHandler = function (event) {
+  event.preventDefault();
   var buttonTarget = event.target;
   buttonTarget.classList.toggle('card__btn-favorite--selected');
 };
@@ -228,13 +230,16 @@ var basketCount = document.querySelector('.main-header__basket');
 
 var countCart = function (array) {
   var count = 0;
+  var costTotal = 0;
   for (var i = 0; i < array.length; i++) {
+    costTotal += array[i].orderedAmount * array[i].price;
     count += array[i].orderedAmount;
   }
-  return count;
+  return [count, costTotal];
 };
 
 var buttonClickSelection = function (event) {
+  event.preventDefault();
   var buttonTargetSelection = event.target.id;
   var foundInCart = false;
   shoppingСart.forEach(function (element) {
@@ -252,14 +257,35 @@ var buttonClickSelection = function (event) {
   });
   basketGoods.textContent = ' ';
   basketGoods.appendChild(fragment);
-  basketCount.textContent = countCart(shoppingСart);
+  var cost = countCart(shoppingСart);
+  basketCount.textContent = 'В корзине товаров: ' + cost[0] + ' на сумму: ' + cost[1] + '₽';
 };
 
 buttonProductSelection.forEach(function (element) {
   element.addEventListener('click', buttonClickSelection);
 });
 
-// Удаление товара из корзины;
-// Управление количеством определенного товара в корзине;
 // Переключение вкладок в форме оформления заказа;
-// Первая фаза работы фильтра по цене.
+// Переключение блока когда будешь платить?
+var payment = document.querySelector('.payment');
+var paymentCard = payment.querySelector('.payment__card-wrap');
+var paymentCash = payment.querySelector('.payment__cash-wrap');
+
+payment.addEventListener('click', function (evt) {
+  if (evt.target.id === 'payment__card' || evt.target.id === 'payment__cash') {
+    paymentCard.classList.toggle('visually-hidden');
+    paymentCash.classList.toggle('visually-hidden');
+  }
+});
+
+// Переключение вкладок в блоке доставке
+var deliver = document.querySelector('.deliver');
+var deliverStore = deliver.querySelector('.deliver__store');
+var deliverCourier = deliver.querySelector('.deliver__courier');
+
+deliver.addEventListener('click', function (evt) {
+  if (evt.target.id === 'deliver__store' || evt.target.id === 'deliver__courier') {
+    deliverStore.classList.toggle('visually-hidden');
+    deliverCourier.classList.toggle('visually-hidden');
+  }
+});
