@@ -320,7 +320,7 @@ var checkCardLuna = function (numberCard) {
 
 var bankCardInput = document.querySelector('#payment__card-number');
 
-bankCardInput.addEventListener('blur', function () {
+bankCardInput.addEventListener('input', function () {
   if (parseInt(bankCardInput.value, 10) > 0) {
     if (checkCardLuna(bankCardInput.value)) {
       bankCardstatusMessadge.textContent = 'Такая карта существует :)';
@@ -332,3 +332,4 @@ bankCardInput.addEventListener('blur', function () {
     bankCardErrorMessadge.classList.remove('visually-hidden');
   }
 });
+
