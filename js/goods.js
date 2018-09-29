@@ -362,7 +362,7 @@ var calculatePrice = function (x) {
 // обработчик для пина
 var onPinMouseDown = function (downEvt) { // при нажатии запоминаем пин и его позицию
   var pin = downEvt.target;
-  var pinStart = pin.ofsetfLeft;
+  var pinStart = pin.offsetLeft;
   var onPinMouseMove = function (moveEvt) {
     var pinCurrent = pinStart - (downEvt.clientX - moveEvt.clientX); // рассчитываем положение пина по сдвигу мыши и начальному положению
     if (pin === leftPin && pinCurrent >= 0 && pinCurrent < rightPin.offsetLeft) { // если пин левый
