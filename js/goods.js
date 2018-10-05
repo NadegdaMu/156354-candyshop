@@ -5,7 +5,6 @@
   document.querySelector('.catalog__cards').classList.remove('catalog__cards--load');
   document.querySelector('.catalog__load').classList.add('visually-hidden');
   var catalogTemplate = document.querySelector('#card').content.querySelector('.catalog__card');
-  var numberObjects = 26;
 
   // Функция, определящая какой класс выбирается в зависимости от рейтинга
   var ratingMap = {
@@ -29,7 +28,7 @@
     strokeSugar = 'Без сахара';
     return strokeSugar;
   };
-
+  /*
   // Функция, генерирующая один продукт
   var itemProducts = function (i) {
     var product = {};
@@ -57,11 +56,10 @@
     }
     return arrayProducts;
   };
-
-  window.products = generatingArrayProducts(numberObjects);
+  */
 
   // Функция отрисовки карточки необычного товара
-  window.renderItemCard = function (datasCard, id) {
+  var renderItemCard = function (datasCard, id) {
     var goodsElement = catalogTemplate.cloneNode(true);
     goodsElement.querySelector('.card__title').textContent = datasCard.name;
     goodsElement.querySelector('.card__img').src = datasCard.picture;
@@ -75,9 +73,20 @@
     return goodsElement;
   };
 
-  var fragment = document.createDocumentFragment();
-  window.products.forEach(function (element, index) {
-    fragment.appendChild(window.renderItemCard(element, index));
-  });
-  goods.appendChild(fragment);
+  var renderGoods = function (data) {
+    var fragment = document.createDocumentFragment();
+    data.forEach(function (element, index) {
+      fragment.appendChild(renderItemCard(element, index));
+    });
+    goods.appendChild(fragment);
+  };
+
+  var products = [];
+
+  var successHandler = function (serverdata) {
+    products = serverdata;
+    renderGoods(products);
+  };
+
+  window.backend.loadData(successHandler);
 })();
