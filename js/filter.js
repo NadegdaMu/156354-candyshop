@@ -10,7 +10,7 @@
   var rangePriceMin = catalogFilterRange.querySelector('.range__price--min');
   var rangePriceMax = catalogFilterRange.querySelector('.range__price--max');
   var rangeFillLine = catalogFilterRange.querySelector('.range__fill-line');
-  var priceMin = 10;
+  var priceMin = 0;
   var priceMax = 1500;
   var pinSize = 10;
 

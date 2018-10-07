@@ -28,41 +28,12 @@
     strokeSugar = 'Без сахара';
     return strokeSugar;
   };
-  /*
-  // Функция, генерирующая один продукт
-  var itemProducts = function (i) {
-    var product = {};
-    product.name = window.utils.getRandomItem(window.utils.names);
-    product.picture = 'img/cards/' + window.utils.getRandomItem(window.utils.photo) + '.jpg';
-    product.amount = i;
-    product.price = window.utils.getRandomInRange(100, 1500);
-    product.weight = window.utils.getRandomInRange(30, 300);
-    product.rating = {};
-    product.rating.value = window.utils.getRandomInRange(1, 5);
-    product.rating.number = window.utils.getRandomInRange(1, 900);
-    product.nutritionFacts = {};
-    product.nutritionFacts.sugar = window.utils.getRandomBoolean();
-    product.nutritionFacts.energy = window.utils.getRandomInRange(70, 500);
-    product.nutritionFacts.contents = window.utils.getRandomNumberValues(window.utils.ingredients);
-    return product;
-  };
-
-  // Функция, для создания массива из 26 сгенерированных объектов.
-  // Каждый объект массива представляет собой описание товара
-  var generatingArrayProducts = function (lengthArray) {
-    var arrayProducts = [];
-    for (var i = 0; i < lengthArray; i++) {
-      arrayProducts[i] = itemProducts(i);
-    }
-    return arrayProducts;
-  };
-  */
 
   // Функция отрисовки карточки необычного товара
   var renderItemCard = function (datasCard, id) {
     var goodsElement = catalogTemplate.cloneNode(true);
     goodsElement.querySelector('.card__title').textContent = datasCard.name;
-    goodsElement.querySelector('.card__img').src = datasCard.picture;
+    goodsElement.querySelector('.card__img').src = 'img/cards/' + datasCard.picture;
     goodsElement.querySelector('.card__price').firstChild.textContent = datasCard.price;
     goodsElement.querySelector('.card__weight').textContent = datasCard.weight + 'г';
     var ratingGoods = goodsElement.querySelector('.stars__rating');
@@ -81,12 +52,13 @@
     goods.appendChild(fragment);
   };
 
-  var products = [];
+  window.products = [];
 
   var successHandler = function (serverdata) {
-    products = serverdata;
-    renderGoods(products);
+    window.products = serverdata;
+    renderGoods(window.products);
   };
 
   window.backend.loadData(successHandler);
+
 })();
