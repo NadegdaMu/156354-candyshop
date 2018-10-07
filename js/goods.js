@@ -50,6 +50,8 @@
       fragment.appendChild(renderItemCard(element, index));
     });
     goods.appendChild(fragment);
+    buttonFavoriteCollection();
+    buttonBasketCollection();
   };
 
   window.products = [];
