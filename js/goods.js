@@ -44,9 +44,9 @@
     return goodsElement;
   };
 
-  var renderGoods = function (data) {
+  var renderGoods = function () {
     var fragment = document.createDocumentFragment();
-    data.forEach(function (element, index) {
+    window.products.forEach(function (element, index) {
       fragment.appendChild(renderItemCard(element, index));
     });
     goods.appendChild(fragment);
@@ -58,6 +58,8 @@
   var successHandler = function (serverdata) {
     window.products = serverdata;
     renderGoods(window.products);
+    window.buttonFavoriteCollection();
+    window.buttonSelectionCollection();
   };
 
   window.backend.loadData(successHandler);
