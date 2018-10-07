@@ -10,7 +10,6 @@
   var basketTemplate = document.querySelector('#card-order').content.querySelector('.goods_card');
 
   // Добавление выбранного товара в корзину;
-  var buttonProductSelection = goods.querySelectorAll('.card__btn');
   var shoppingСart = []; // Массив для товаров в корзине
 
   // Функция которая копирует ссылку объекта с одно массива и помещает в другой объект
@@ -39,7 +38,8 @@
     var goodsElementBasket = basketTemplate.cloneNode(true);
     goodsElementBasket.querySelector('.card-order__title').textContent = obj.name;
     goodsElementBasket.querySelector('.card-order__img').src = 'img/cards/' + obj.picture;
-    goodsElementBasket.querySelector('.card-order__price').firstChild.textContent = obj.price;
+    goodsElementBasket.querySelector('.card-order__price').textContent = obj.price;
+    return goodsElementBasket;
   };
 
   var buttonClickSelection = function (event) {
@@ -66,8 +66,10 @@
     basketCount.textContent = 'В корзине товаров: ' + cost[0] + ' на сумму: ' + cost[1] + '₽';
   };
 
-  buttonProductSelection.forEach(function (element) {
-    element.addEventListener('click', buttonClickSelection);
-  });
-
+  window.buttonBasketCollection = function () {
+    var buttonProductSelection = goods.querySelectorAll('.card__btn');
+    buttonProductSelection.forEach(function (element) {
+      element.addEventListener('click', buttonClickSelection);
+    });
+  };
 })();
