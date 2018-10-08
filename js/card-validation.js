@@ -6,10 +6,10 @@
   var bankCardErrorMessadge = document.querySelector('.payment__error-message');
   var form = document.querySelector('.buy form');
   var paymentInputs = form.querySelector('.payment__inputs');
-  var cardInput = document.getElementById('payment__card-number');
-  var cardDateInput = document.getElementById('payment__card-date');
-  var cardCvcInput = document.getElementById('payment__card-cvc');
-  var cardHolderInput = document.getElementById('payment__cardholder');
+  var cardNumberInput = document.querySelector('#payment__card-number');
+  var cardDateInput = document.querySelector('#payment__card-date');
+  var cardCvcInput = document.querySelector('#payment__card-cvc');
+  var cardHolderInput = document.querySelector('#payment__cardholder');
   var BACKSPACE_KEY = 8;
   var TAB_KEY = 9;
   var LEFT_KEY = 37;
@@ -32,86 +32,119 @@
     return (sum % 10) === 0;
   };
 
-  var bankCardInput = document.querySelector('#payment__card-number');
 
-  bankCardInput.addEventListener('input', function () {
-    if (parseInt(bankCardInput.value, 10) > 0) {
-      if (checkCardLuna(bankCardInput.value)) {
+  cardNumberInput.addEventListener('input', function (evt) {
+    allowNumbersOnly(evt);
+    if (parseInt(cardNumberInput.value, 10) > 0 && cardNumberInput.value.length < 17) {
+      if (checkCardLuna(cardNumberInput.value)) {
         bankCardstatusMessadge.textContent = 'Такая карта существует :)';
         bankCardErrorMessadge.classList.add('visually-hidden');
+        cardNumberInput.setCustomValidity('');
       } else {
         bankCardErrorMessadge.classList.remove('visually-hidden');
+        cardNumberInput.setCustomValidity('Неверный номер карты');
       }
     } else {
+
       bankCardErrorMessadge.classList.remove('visually-hidden');
+      cardNumberInput.setCustomValidity('Неверный номер карты');
+
     }
   });
 
+
+
   // Добавление слэша в дату карты
-  var maskDate = function (input, evt) {
+  var maskDate = function (evt) {
     var value = cardDateInput.value.replace(/\D/g, '').slice(0, 10);
-    if (value.length >= 4 &&
+    if (value.length > 4 &&
       evt.keyCode !== BACKSPACE_KEY &&
       evt.keyCode !== TAB_KEY &&
       evt.keyCode !== LEFT_KEY &&
       evt.keyCode !== RIGHT_KEY
+
     ) {
+      cardDateInput.setCustomValidity('Неверная дата карты');
       evt.preventDefault();
     } else if (value.length >= 3) {
       cardDateInput.value = value.slice(0, 2) + '/' + value.slice(2);
+      cardDateInput.setCustomValidity('');
+    } else {
+      cardDateInput.setCustomValidity('Неверная дата карты');
     }
   };
 
+  cardDateInput.addEventListener("input", function (evt) {
+    allowNumbersOnly(evt);
+    maskDate(evt);
+  });
+
+
+  cardCvcInput.addEventListener("input", function(evt) {
+    allowNumbersOnly(evt);
+    if ((parseInt(cardCvcInput.value, 10) >= 100) && (parseInt(cardCvcInput.value, 10) <= 999)) {
+      cardCvcInput.setCustomValidity('');
+    } else {
+      cardCvcInput.setCustomValidity('Неверный cvc');
+    }
+  });
+
+  cardHolderInput.addEventListener("input", function(evt) {
+    allowCharsOnly(evt);
+  });
   // Ввод только цифр
   var allowNumbersOnly = function (evt) {
     evt.target.value = evt.target.value.replace(/(?!\/)[^\d]/g, '');
   };
 
-  var cardDateInputMask = function (evt) {
-    allowNumbersOnly(evt);
-    maskDate(cardDateInput, evt);
-  };
+  var allowCharsOnly = function (evt) {
+    evt.target.value = evt.target.value.replace(/(?!\/)[^\sa-zA-Z]/g, '');
+  }
 
-  var cardInputMask = function (evt) {
-    allowNumbersOnly(evt);
-    if (cardInput.value.length >= 16 &&
-      evt.keyCode !== BACKSPACE_KEY &&
-      evt.keyCode !== TAB_KEY &&
-      evt.keyCode !== LEFT_KEY &&
-      evt.keyCode !== RIGHT_KEY
-    ) {
-      evt.preventDefault();
-    }
-  };
+  // var cardDateInputMask = function (evt) {
+  //   allowNumbersOnly(evt);
+  //   maskDate(cardDateInput, evt);
+  // };
 
-  // Доставка товара по адресу из списка
-  var initDeliver = function () {
-    var deliverListElem = document.querySelector('.deliver__store-list');
-    var imgElem = document.querySelector('.deliver__store-map-img');
-    var imgRoot = 'img/map/';
+  // var cardInputMask = function (evt) {
+  //   allowNumbersOnly(evt);
+  //   if (cardInput.value.length >= 16 &&
+  //     evt.keyCode !== BACKSPACE_KEY &&
+  //     evt.keyCode !== TAB_KEY &&
+  //     evt.keyCode !== LEFT_KEY &&
+  //     evt.keyCode !== RIGHT_KEY
+  //   ) {
+  //     evt.preventDefault();
+  //    }
+  // };
 
-    var onRadioInputChange = function (evt) {
-      var currentInput = evt.target;
-      var currentImg = currentInput.value;
-      imgElem.src = imgRoot + currentImg + '.jpg';
-    };
-    deliverListElem.addEventListener('change', onRadioInputChange);
-  };
+  // // Доставка товара по адресу из списка
+  // var initDeliver = function () {
+  //   var deliverListElem = document.querySelector('.deliver__store-list');
+  //   var imgElem = document.querySelector('.deliver__store-map-img');
+  //   var imgRoot = 'img/map/';
 
-  var onPaymentInputsChange = function (evt) {
-    if (evt.target.id === 'payment__card-number') {
-      cardInputMask(evt);
-    }
-    if (evt.target.id === 'payment__card-date') {
-      cardDateInputMask(evt);
-    }
-    validateCard();
-  };
+  //   var onRadioInputChange = function (evt) {
+  //     var currentInput = evt.target;
+  //     var currentImg = currentInput.value;
+  //     imgElem.src = imgRoot + currentImg + '.jpg';
+  //   };
+  //   deliverListElem.addEventListener('change', onRadioInputChange);
+  // };
 
-  paymentInputs.addEventListener('keyup', onPaymentInputsChange);
-  paymentInputs.addEventListener('keydown', onPaymentInputsChange);
-  paymentInputs.addEventListener('keypress', onPaymentInputsChange);
-  paymentInputs.addEventListener('change', onPaymentInputsChange);
-  initDeliver();
+  // var onPaymentInputsChange = function (evt) {
+  //   if (evt.target.id === 'payment__card-number') {
+  //     cardInputMask(evt);
+  //   }
+  //   if (evt.target.id === 'payment__card-date') {
+  //     cardDateInputMask(evt);
+  //   }
+  // };
+
+  // paymentInputs.addEventListener('keyup', onPaymentInputsChange);
+  // paymentInputs.addEventListener('keydown', onPaymentInputsChange);
+  // paymentInputs.addEventListener('keypress', onPaymentInputsChange);
+  // paymentInputs.addEventListener('change', onPaymentInputsChange);
+  // initDeliver();
 
 })();
