@@ -4,6 +4,12 @@
   // Проверка правильности номера банковской карты
   var bankCardstatusMessadge = document.querySelector('.payment__card-status');
   var bankCardErrorMessadge = document.querySelector('.payment__error-message');
+  var form = document.querySelector('.buy form');
+  var paymentInputs = form.querySelector('.payment__inputs');
+  var cardInput = document.getElementById('payment__card-number');
+  var cardDateInput = document.getElementById('payment__card-date');
+  var cardCvcInput = document.getElementById('payment__card-cvc');
+  var cardHolderInput = document.getElementById('payment__cardholder');
   var BACKSPACE_KEY = 8;
   var TAB_KEY = 9;
   var LEFT_KEY = 37;
@@ -127,10 +133,6 @@
     paymentInputs.addEventListener('keydown', onPaymentInputsChange);
     paymentInputs.addEventListener('keypress', onPaymentInputsChange);
     paymentInputs.addEventListener('change', onPaymentInputsChange);
-
     initDeliver();
-  }
-
-  window.inputDisabled();
 
 })();
