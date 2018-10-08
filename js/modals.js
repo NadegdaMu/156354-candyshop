@@ -35,8 +35,8 @@
       addEscHandler();
     },
 
-    showErrorModal: function (errMessage) {
-      errorModal.querySelector('.modal__message').textContent = errMessage;
+    showErrorModal: function (errorMessage) {
+      errorModal.querySelector('.modal__message').textContent = errorMessage;
       errorModal.classList.remove('modal--hidden');
       addEscHandler();
     },
