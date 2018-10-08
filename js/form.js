@@ -22,7 +22,7 @@
   form.addEventListener('submit', function (evt) {
     evt.preventDefault();
     if (form.checkValidity()) {
-      window.backend.uploadData(new FormData(form), onLoad, onError);
+      window.backend.uploadData(new FormData(form), window.modals.showSuccessModal(), window.modals.showErrorModal());
     }
     return false;
   });
