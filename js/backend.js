@@ -26,6 +26,9 @@
         default:
           error = 'Cтатус ответа: : ' + xhr.status + ' ' + xhr.statusText;
       }
+      if (error) {
+        onError(error);
+      }
     });
 
     xhr.addEventListener('error', function () {
