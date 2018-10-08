@@ -15,6 +15,7 @@
       paymentCard.classList.add('visually-hidden');
       paymentCash.classList.remove('visually-hidden');
     }
+    window.inputDisabled();
   });
 
   // Переключение вкладок в блоке доставки
@@ -30,5 +31,6 @@
       deliverStore.classList.add('visually-hidden');
       deliverCourier.classList.remove('visually-hidden');
     }
+    window.inputDisabled();
   });
 })();
