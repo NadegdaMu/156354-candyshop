@@ -53,15 +53,15 @@
 
   var renderCardsInBasket = function () {
     var fragment = document.createDocumentFragment();
-    shoppingСart.forEach(function (element, index) {
+    window.shoppingСart.forEach(function (element, index) {
       fragment.appendChild(renderItemCardBasket(element, index));
     });
     basketGoods.textContent = ' ';
     basketGoods.appendChild(fragment);
-    var cost = countCart(shoppingСart);
+    var cost = countCart(window.shoppingСart);
     basketCount.textContent = 'В корзине товаров: ' + cost[0] + ' на сумму: ' + cost[1] + '₽';
 
-    if (shoppingСart.length === 0) {
+    if (window.shoppingСart.length === 0) {
       basketGoods.appendChild(basketGood);
       basketOformlayem.classList.add('visually-hidden');
     } else {
@@ -76,7 +76,7 @@
     event.preventDefault();
     var buttonTargetSelection = event.target.id;
     var foundInCart = false;
-    shoppingСart.forEach(function (element) {
+    window.shoppingСart.forEach(function (element) {
       if (element.id === buttonTargetSelection) {
         if (element.amount > element.orderedAmount) {
           element.orderedAmount++;
@@ -86,7 +86,7 @@
     });
     if (foundInCart === false) {
       var product = getNewProduct(buttonTargetSelection, window.products[buttonTargetSelection]);
-      shoppingСart.push(product);
+      window.shoppingСart.push(product);
     }
     renderCardsInBasket();
   };
@@ -102,30 +102,28 @@
   var buttonClickDelete = function (event) {
     event.preventDefault();
     var buttonGoodsDelete = event.target.id;
-    shoppingСart.splice(buttonGoodsDelete, 1);
+    window.shoppingСart.splice(buttonGoodsDelete, 1);
     renderCardsInBasket();
   };
 
   // Уменьшение кол-ва товара
   var decreasetItemCard = function (event) {
     var item = event.target.id;
-
-    if (shoppingСart[item].orderedAmount === 1) {
-      shoppingСart.splice(item, 1);
+    if (window.shoppingСart[item].orderedAmount === 1) {
+      window.shoppingСart.splice(item, 1);
     } else {
-      shoppingСart[item].orderedAmount -= 1;
+      window.shoppingСart[item].orderedAmount -= 1;
     }
-
     renderCardsInBasket();
   };
 
   // Увеличение кол-ва товара
   var increasetItemCard = function (event) {
     var item = event.target.id;
-
-    if (shoppingСart[item].amount > shoppingСart[item].orderedAmount) {
-      shoppingСart[item].orderedAmount += 1;
+    if (window.shoppingСart[item].amount > window.shoppingСart[item].orderedAmount) {
+      window.shoppingСart[item].orderedAmount += 1;
     }
     renderCardsInBasket();
   };
+
 })();

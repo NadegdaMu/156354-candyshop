@@ -7,7 +7,7 @@
   var fieldSets = form.querySelectorAll('fieldset');
   var disabledState = window.shoppingСart ? window.shoppingСart.length === 0 : true;
 
-  var inputDisabled = function () {
+  window.inputDisabled = function () {
     for (var i = 0; i < inputs.length; i++) {
       inputs[i].disabled = disabledState;
     }
