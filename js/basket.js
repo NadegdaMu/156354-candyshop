@@ -9,7 +9,7 @@
   var basketTemplate = document.querySelector('#card-order').content.querySelector('.goods_card');
   var basketOformlayem = document.querySelector('.goods__total');
   // Добавление выбранного товара в корзину;
-  var shoppingСart = []; // Массив для товаров в корзине
+  window.shoppingСart = []; // Массив для товаров в корзине
 
   // Функция которая копирует ссылку объекта с одно массива и помещает в другой объект
   var getNewProduct = function (id, selectedProduct) {
