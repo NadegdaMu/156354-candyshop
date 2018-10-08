@@ -84,25 +84,6 @@
     }
   };
 
-  // Проверка валидности номера карты
-  var validateCard = function () {
-    var cardNumber = cardInput.value.replace(/\s/g, '').trim();
-    if (!checkCardLuna(cardNumber)) {
-      cardInput.setCustomValidity('Введенная карта невалидна');
-    } else {
-      cardInput.setCustomValidity('');
-    }
-    if (cardInput.validity.valid &&
-      cardDateInput.validity.valid &&
-      cardCvcInput.validity.valid &&
-      cardHolderInput.validity.valid
-    ) {
-      form.querySelector('.payment__card-status').textContent = 'Одобрен';
-    } else {
-      form.querySelector('.payment__card-status').textContent = 'Не определен';
-    }
-  };
-
   // Доставка товара по адресу из списка
   var initDeliver = function () {
     var deliverListElem = document.querySelector('.deliver__store-list');
