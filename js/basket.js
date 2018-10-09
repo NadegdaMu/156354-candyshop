@@ -70,7 +70,7 @@
       basketOformlayem.classList.remove('visually-hidden');
       basketOformlayem.querySelector('.goods__total-count').firstChild.textContent = 'ИТОГО ЗА ' + cost[0] + ' ТОВАРОВ:';
       basketOformlayem.querySelector('.goods__price').textContent = cost[1];
-      basketOformlayem.querySelector('.goods_order-link').classList.remove('goods_order-link--disabled');
+      basketOformlayem.querySelector('.goods__order-link').classList.remove('goods_order-link--disabled');
       submitBtn.disabled = '';
     }
   };

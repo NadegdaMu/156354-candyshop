@@ -32,7 +32,9 @@
     showSuccessModal: function () {
       successModal.classList.remove('modal--hidden');
       addEscHandler();
-      document.querySelector('.catalog__form').reset();
+      document.querySelector('.buy form').reset();
+      window.shoppingСart = [];
+      window.renderCardsInBasket();
     },
 
     showErrorModal: function (errorMessage) {
