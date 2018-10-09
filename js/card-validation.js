@@ -35,20 +35,20 @@
 
   cardNumberInput.addEventListener('input', function (evt) {
     allowNumbersOnly(evt);
-    if (parseInt(cardNumberInput.value, 10) > 0 && cardNumberInput.value.length < 17) {
-      if (checkCardLuna(cardNumberInput.value)) {
+    if ((parseInt(evt.target.value, 10) > 0) && (evt.target.value.length < 17)) {
+      if (checkCardLuna(evt.target.value)) {
         bankCardstatusMessadge.textContent = 'Такая карта существует :)';
         bankCardErrorMessadge.classList.add('visually-hidden');
-        cardNumberInput.setCustomValidity('');
+        evt.target.setCustomValidity('');
       } else {
+        bankCardstatusMessadge.textContent = 'СТАТУС КАРТЫ: НЕ ОПРЕДЕЛЁН';
         bankCardErrorMessadge.classList.remove('visually-hidden');
-        cardNumberInput.setCustomValidity('Неверный номер карты');
+        evt.target.setCustomValidity('Неверный номер карты');
       }
     } else {
-
+      bankCardstatusMessadge.textContent = 'СТАТУС КАРТЫ: НЕ ОПРЕДЕЛЁН';
       bankCardErrorMessadge.classList.remove('visually-hidden');
-      cardNumberInput.setCustomValidity('Неверный номер карты');
-
+      evt.target.setCustomValidity('Неверный номер карты');
     }
   });
 
@@ -57,16 +57,15 @@
   // Добавление слэша в дату карты
   var maskDate = function (evt) {
     var value = cardDateInput.value.replace(/\D/g, '').slice(0, 10);
-    if (value.length > 4 &&
+    if (value.length > 6 &&
       evt.keyCode !== BACKSPACE_KEY &&
       evt.keyCode !== TAB_KEY &&
       evt.keyCode !== LEFT_KEY &&
       evt.keyCode !== RIGHT_KEY
-
     ) {
       cardDateInput.setCustomValidity('Неверная дата карты');
       evt.preventDefault();
-    } else if (value.length >= 3) {
+    } else if (value.length > 3 && value.length < 6) {
       cardDateInput.value = value.slice(0, 2) + '/' + value.slice(2);
       cardDateInput.setCustomValidity('');
     } else {
@@ -98,8 +97,11 @@
   };
 
   var allowCharsOnly = function (evt) {
-    evt.target.value = evt.target.value.replace(/(?!\/)[^\sa-zA-Z]/g, '');
+    evt.target.value = evt.target.value.replace(/(?!\/)[^a-zA-Z\s]/g, '');
   }
+
+
+
 
   // var cardDateInputMask = function (evt) {
   //   allowNumbersOnly(evt);
