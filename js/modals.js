@@ -33,8 +33,8 @@
       successModal.classList.remove('modal--hidden');
       addEscHandler();
       document.querySelector('.buy form').reset();
-      window.shoppingСart = [];
-      window.renderCardsInBasket();
+      window.basket.shoppingСart = [];
+      window.basket.renderCardsInBasket();
     },
 
     showErrorModal: function (errorMessage) {

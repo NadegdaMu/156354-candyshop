@@ -4,8 +4,8 @@
   // Проверка правильности номера банковской карты
   var bankCardstatusMessadge = document.querySelector('.payment__card-status');
   var bankCardErrorMessadge = document.querySelector('.payment__error-message');
-  var form = document.querySelector('.buy form');
-  var paymentInputs = form.querySelector('.payment__inputs');
+  // var form = document.querySelector('.buy form');
+  // var paymentInputs = form.querySelector('.payment__inputs');
   var cardNumberInput = document.querySelector('#payment__card-number');
   var cardDateInput = document.querySelector('#payment__card-date');
   var cardCvcInput = document.querySelector('#payment__card-cvc');
@@ -52,8 +52,6 @@
     }
   });
 
-
-
   // Добавление слэша в дату карты
   var maskDate = function (evt) {
     var value = cardDateInput.value.replace(/\D/g, '').slice(0, 10);
@@ -73,13 +71,13 @@
     }
   };
 
-  cardDateInput.addEventListener("input", function (evt) {
+  cardDateInput.addEventListener('input', function (evt) {
     allowNumbersOnly(evt);
     maskDate(evt);
   });
 
 
-  cardCvcInput.addEventListener("input", function(evt) {
+  cardCvcInput.addEventListener('input', function (evt) {
     allowNumbersOnly(evt);
     if ((parseInt(cardCvcInput.value, 10) >= 100) && (parseInt(cardCvcInput.value, 10) <= 999)) {
       cardCvcInput.setCustomValidity('');
@@ -88,7 +86,7 @@
     }
   });
 
-  cardHolderInput.addEventListener("input", function(evt) {
+  cardHolderInput.addEventListener('input', function (evt) {
     allowCharsOnly(evt);
   });
   // Ввод только цифр
@@ -98,55 +96,6 @@
 
   var allowCharsOnly = function (evt) {
     evt.target.value = evt.target.value.replace(/(?!\/)[^a-zA-Z\s]/g, '');
-  }
-
-
-
-
-  // var cardDateInputMask = function (evt) {
-  //   allowNumbersOnly(evt);
-  //   maskDate(cardDateInput, evt);
-  // };
-
-  // var cardInputMask = function (evt) {
-  //   allowNumbersOnly(evt);
-  //   if (cardInput.value.length >= 16 &&
-  //     evt.keyCode !== BACKSPACE_KEY &&
-  //     evt.keyCode !== TAB_KEY &&
-  //     evt.keyCode !== LEFT_KEY &&
-  //     evt.keyCode !== RIGHT_KEY
-  //   ) {
-  //     evt.preventDefault();
-  //    }
-  // };
-
-  // // Доставка товара по адресу из списка
-  // var initDeliver = function () {
-  //   var deliverListElem = document.querySelector('.deliver__store-list');
-  //   var imgElem = document.querySelector('.deliver__store-map-img');
-  //   var imgRoot = 'img/map/';
-
-  //   var onRadioInputChange = function (evt) {
-  //     var currentInput = evt.target;
-  //     var currentImg = currentInput.value;
-  //     imgElem.src = imgRoot + currentImg + '.jpg';
-  //   };
-  //   deliverListElem.addEventListener('change', onRadioInputChange);
-  // };
-
-  // var onPaymentInputsChange = function (evt) {
-  //   if (evt.target.id === 'payment__card-number') {
-  //     cardInputMask(evt);
-  //   }
-  //   if (evt.target.id === 'payment__card-date') {
-  //     cardDateInputMask(evt);
-  //   }
-  // };
-
-  // paymentInputs.addEventListener('keyup', onPaymentInputsChange);
-  // paymentInputs.addEventListener('keydown', onPaymentInputsChange);
-  // paymentInputs.addEventListener('keypress', onPaymentInputsChange);
-  // paymentInputs.addEventListener('change', onPaymentInputsChange);
-  // initDeliver();
+  };
 
 })();

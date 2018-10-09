@@ -59,7 +59,7 @@
     window.products = serverdata;
     renderGoods(window.products);
     window.buttonFavoriteCollection();
-    window.buttonSelectionCollection();
+    window.basket.buttonSelectionCollection();
   };
 
   window.backend.loadData(successHandler);

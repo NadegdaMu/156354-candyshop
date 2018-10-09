@@ -40,11 +40,11 @@
   var deliverDesc = deliver.querySelector('.deliver__textarea');
 
   if (document.querySelector('#deliver__store').checked === true) {
-      deliverStreet.disabled = 'disabled';
-      deliverHouse.disabled = 'disabled';
-      deliverRoom.disabled = 'disabled';
-      deliverFloor.disabled = 'disabled';
-      deliverDesc.disabled = 'disabled';
+    deliverStreet.disabled = 'disabled';
+    deliverHouse.disabled = 'disabled';
+    deliverRoom.disabled = 'disabled';
+    deliverFloor.disabled = 'disabled';
+    deliverDesc.disabled = 'disabled';
   }
 
   deliver.addEventListener('click', function (evt) {

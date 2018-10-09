@@ -9,7 +9,6 @@
   var basketTemplate = document.querySelector('#card-order').content.querySelector('.goods_card');
   var basketOformlayem = document.querySelector('.goods__total');
   // Добавление выбранного товара в корзину;
-  window.shoppingСart = []; // Массив для товаров в корзине
 
   // Функция которая копирует ссылку объекта с одно массива и помещает в другой объект
   var getNewProduct = function (id, selectedProduct) {
@@ -51,35 +50,11 @@
     return goodsElementBasket;
   };
 
-  var renderCardsInBasket = function () {
-    var fragment = document.createDocumentFragment();
-    window.shoppingСart.forEach(function (element, index) {
-      fragment.appendChild(renderItemCardBasket(element, index));
-    });
-    basketGoods.textContent = ' ';
-    basketGoods.appendChild(fragment);
-    var cost = countCart(window.shoppingСart);
-    basketCount.textContent = 'В корзине товаров: ' + cost[0] + ' на сумму: ' + cost[1] + '₽';
-    var submitBtn = document.querySelector('.buy__submit-btn');
-
-    if (window.shoppingСart.length === 0) {
-      basketGoods.appendChild(basketGood);
-      basketOformlayem.classList.add('visually-hidden');
-      submitBtn.disabled = 'disabled';
-    } else {
-      basketOformlayem.classList.remove('visually-hidden');
-      basketOformlayem.querySelector('.goods__total-count').firstChild.textContent = 'ИТОГО ЗА ' + cost[0] + ' ТОВАРОВ:';
-      basketOformlayem.querySelector('.goods__price').textContent = cost[1];
-      basketOformlayem.querySelector('.goods__order-link').classList.remove('goods_order-link--disabled');
-      submitBtn.disabled = '';
-    }
-  };
-
   var buttonClickSelection = function (event) {
     event.preventDefault();
     var buttonTargetSelection = event.target.id;
     var foundInCart = false;
-    window.shoppingСart.forEach(function (element) {
+    window.basket.shoppingСart.forEach(function (element) {
       if (element.id === buttonTargetSelection) {
         if (element.amount > element.orderedAmount) {
           element.orderedAmount++;
@@ -89,16 +64,9 @@
     });
     if (foundInCart === false) {
       var product = getNewProduct(buttonTargetSelection, window.products[buttonTargetSelection]);
-      window.shoppingСart.push(product);
+      window.basket.shoppingСart.push(product);
     }
-    renderCardsInBasket();
-  };
-
-  window.buttonSelectionCollection = function () {
-    var buttonProductSelection = goods.querySelectorAll('.card__btn');
-    buttonProductSelection.forEach(function (element) {
-      element.addEventListener('click', buttonClickSelection);
-    });
+    window.basket.renderCardsInBasket();
   };
 
   // Удаление товара из корзины
@@ -106,7 +74,7 @@
     event.preventDefault();
     var buttonGoodsDelete = event.target.id;
     window.shoppingСart.splice(buttonGoodsDelete, 1);
-    renderCardsInBasket();
+    window.basket.renderCardsInBasket();
   };
 
   // Уменьшение кол-ва товара
@@ -117,16 +85,51 @@
     } else {
       window.shoppingСart[item].orderedAmount -= 1;
     }
-    renderCardsInBasket();
+    window.basket.renderCardsInBasket();
   };
 
   // Увеличение кол-ва товара
   var increasetItemCard = function (event) {
     var item = event.target.id;
-    if (window.shoppingСart[item].amount > window.shoppingСart[item].orderedAmount) {
-      window.shoppingСart[item].orderedAmount += 1;
+    if (window.basket.shoppingСart[item].amount > window.basket.shoppingСart[item].orderedAmount) {
+      window.basket.shoppingСart[item].orderedAmount += 1;
     }
-    renderCardsInBasket();
+    window.basket.renderCardsInBasket();
   };
-  renderCardsInBasket();
+  window.basket = {
+    // Массив для товаров в корзине
+    shoppingСart: [],
+    renderCardsInBasket: function () {
+      var fragment = document.createDocumentFragment();
+      window.basket.shoppingСart.forEach(function (element, index) {
+        fragment.appendChild(renderItemCardBasket(element, index));
+      });
+      basketGoods.textContent = ' ';
+      basketGoods.appendChild(fragment);
+      var cost = countCart(window.basket.shoppingСart);
+      basketCount.textContent = 'В корзине товаров: ' + cost[0] + ' на сумму: ' + cost[1] + '₽';
+      var submitBtn = document.querySelector('.buy__submit-btn');
+
+      if (window.basket.shoppingСart.length === 0) {
+        basketGoods.appendChild(basketGood);
+        basketOformlayem.classList.add('visually-hidden');
+        submitBtn.disabled = 'disabled';
+      } else {
+        basketOformlayem.classList.remove('visually-hidden');
+        basketOformlayem.querySelector('.goods__total-count').firstChild.textContent = 'ИТОГО ЗА ' + cost[0] + ' ТОВАРОВ:';
+        basketOformlayem.querySelector('.goods__price').textContent = cost[1];
+        basketOformlayem.querySelector('.goods__order-link').classList.remove('goods_order-link--disabled');
+        submitBtn.disabled = '';
+      }
+    },
+    buttonSelectionCollection: function () {
+      var buttonProductSelection = goods.querySelectorAll('.card__btn');
+      buttonProductSelection.forEach(function (element) {
+        element.addEventListener('click', buttonClickSelection);
+      });
+    }
+  };
+
+  window.basket.renderCardsInBasket();
+
 })();
