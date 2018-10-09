@@ -2,7 +2,6 @@
 
 (function () {
   var ESC_KEY = 27;
-  var
   var modals = document.querySelectorAll('.modal');
   var successModal = document.querySelector('.modal--success');
   var errorModal = document.querySelector('.modal--error');
