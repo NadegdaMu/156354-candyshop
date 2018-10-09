@@ -63,5 +63,4 @@
   };
 
   window.backend.loadData(successHandler);
-
 })();

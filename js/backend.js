@@ -1,8 +1,8 @@
 'use strict';
 
 (function () {
-  var UrlGet = 'https://js.dump.academy/candyshop/data';
-  var UrlPost = 'https://js.dump.academy/candyshop';
+  var URL_GET = 'https://js.dump.academy/candyshop/data';
+  var URL_POST = 'https://js.dump.academy/candyshop';
 
   var getXhr = function (onSuccess, onError) {
     var xhr = new XMLHttpRequest();
@@ -47,13 +47,13 @@
   window.backend = {
     loadData: function (onLoad, onError) {
       var xhr = getXhr(onLoad, onError);
-      xhr.open('GET', UrlGet);
+      xhr.open('GET', URL_GET);
       xhr.send();
     },
 
     uploadData: function (data, onLoad, onError) {
       var xhr = getXhr(onLoad, onError);
-      xhr.open('POST', UrlPost);
+      xhr.open('POST', URL_POST);
       xhr.send(data);
     }
   };

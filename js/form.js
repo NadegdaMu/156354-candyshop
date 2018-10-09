@@ -16,25 +16,6 @@
     }
   });
 
-  var customerTel = document.querySelector('#contact-data__tel');
-  customerTel.addEventListener('blur', function (evt) {
-    evt.target.setCustomValidity('');
-    if (!evt.target.checkValidity()) {
-      evt.target.setCustomValidity('Телефон обязательное поле');
-    }
-  });
-  customerTel.addEventListener('input', function (evt) {
-    allowNumbersOnly(evt);
-  });
-
-  var customerEmail = document.querySelector('#contact-data__email');
-  customerEmail.addEventListener('blur', function (evt) {
-    evt.target.setCustomValidity('');
-    if (evt.target.checkValidity()) {
-      evt.target.setCustomValidity('Неверный адрес электронной почты');
-    }
-  });
-
   // Доставка товара по адресу из списка
   var initDeliver = function () {
     var deliverListElem = document.querySelector('.deliver__store-list');

@@ -2,18 +2,16 @@
 
 (function () {
   // Проверка правильности номера банковской карты
-  var bankCardstatusMessadge = document.querySelector('.payment__card-status');
-  var bankCardErrorMessadge = document.querySelector('.payment__error-message');
-  // var form = document.querySelector('.buy form');
-  // var paymentInputs = form.querySelector('.payment__inputs');
-  var cardNumberInput = document.querySelector('#payment__card-number');
-  var cardDateInput = document.querySelector('#payment__card-date');
-  var cardCvcInput = document.querySelector('#payment__card-cvc');
-  var cardHolderInput = document.querySelector('#payment__cardholder');
   var BACKSPACE_KEY = 8;
   var TAB_KEY = 9;
   var LEFT_KEY = 37;
   var RIGHT_KEY = 39;
+  var bankCardstatusMessadge = document.querySelector('.payment__card-status');
+  var bankCardErrorMessadge = document.querySelector('.payment__error-message');
+  var cardNumberInput = document.querySelector('#payment__card-number');
+  var cardDateInput = document.querySelector('#payment__card-date');
+  var cardCvcInput = document.querySelector('#payment__card-cvc');
+  var cardHolderInput = document.querySelector('#payment__cardholder');
 
   // Функция, которая проверяет номер по Алгоритму Луна
   var checkCardLuna = function (numberCard) {
@@ -31,7 +29,6 @@
     }
     return (sum % 10) === 0;
   };
-
 
   cardNumberInput.addEventListener('input', function (evt) {
     allowNumbersOnly(evt);
@@ -76,7 +73,6 @@
     maskDate(evt);
   });
 
-
   cardCvcInput.addEventListener('input', function (evt) {
     allowNumbersOnly(evt);
     if ((parseInt(cardCvcInput.value, 10) >= 100) && (parseInt(cardCvcInput.value, 10) <= 999)) {
@@ -97,5 +93,4 @@
   var allowCharsOnly = function (evt) {
     evt.target.value = evt.target.value.replace(/(?!\/)[^a-zA-Z\s]/g, '');
   };
-
 })();

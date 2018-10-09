@@ -73,7 +73,7 @@
   var buttonClickDelete = function (event) {
     event.preventDefault();
     var buttonGoodsDelete = event.target.id;
-    window.shoppingСart.splice(buttonGoodsDelete, 1);
+    window.basket.shoppingСart.splice(buttonGoodsDelete, 1);
     window.basket.renderCardsInBasket();
   };
 
@@ -131,5 +131,4 @@
   };
 
   window.basket.renderCardsInBasket();
-
 })();

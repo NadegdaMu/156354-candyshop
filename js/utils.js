@@ -3,7 +3,6 @@
 (function () {
 
   window.utils = {
-
     // Функция возвращающая случайный елемент массива
     getRandomItem: function (array) {
       var randomIndex = array[Math.floor(Math.random() * (array.length))];
