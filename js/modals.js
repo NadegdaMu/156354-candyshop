@@ -2,7 +2,7 @@
 
 (function () {
   var ESC_KEY = 27;
-
+  var
   var modals = document.querySelectorAll('.modal');
   var successModal = document.querySelector('.modal--success');
   var errorModal = document.querySelector('.modal--error');
@@ -33,6 +33,7 @@
     showSuccessModal: function () {
       successModal.classList.remove('modal--hidden');
       addEscHandler();
+      document.querySelector('.catalog__form').reset();
     },
 
     showErrorModal: function (errorMessage) {

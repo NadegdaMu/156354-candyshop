@@ -63,7 +63,7 @@
       if (window.shoppingСart.length > 0) {
         var formdata = new FormData(form);
         formdata.append('cartItems', JSON.stringify(window.shoppingСart));
-        window.backend.uploadData(formdata, window.modals.showSuccessModal(), window.modals.showErrorModal());
+        window.backend.uploadData(formdata, window.modals.showSuccessModal, window.modals.showErrorModal);
       } else {
         console.log("корзина пуста");
 

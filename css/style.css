@@ -1321,6 +1321,7 @@ body {
   position: fixed;
   left: 50%;
   width: 400px;
+  height: 200px;
   margin-left: -200px;
   top: 300px;
   z-index: 5;
