@@ -60,6 +60,7 @@
     renderGoods(window.products);
     window.buttonFavoriteCollection();
     window.basket.buttonSelectionCollection();
+    window.sortGoods();
   };
 
   window.backend.loadData(successHandler);
