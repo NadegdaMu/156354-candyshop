@@ -10,8 +10,6 @@
   var rangePriceMin = catalogFilterRange.querySelector('.range__price--min');
   var rangePriceMax = catalogFilterRange.querySelector('.range__price--max');
   var rangeFillLine = catalogFilterRange.querySelector('.range__fill-line');
-  var priceMin = 0;
-  var priceMax = 1500;
   var pinSize = 10;
 
   // выставим начальные значения пина и бара;
@@ -19,12 +17,10 @@
   rightPin.style.right = 0;
   rangeFillLine.style.left = (leftPin.offsetLeft) + pinSize + 'px';
   rangeFillLine.style.right = pinSize + 'px';
-  rangePriceMin.textContent = priceMin;
-  rangePriceMax.textContent = priceMax;
 
   var calculatePrice = function (x) {
     var relativePositionInPercent = Math.round((x * 100) / (range - pinSize)); // вычисляю положение в % от начала
-    return Math.round((priceMax - priceMin) * (relativePositionInPercent / 100) + priceMin); // вычисляю цену
+    return Math.round((window.MAXPRICE - window.MINPRICE) * (relativePositionInPercent / 100) + window.MINPRICE); // вычисляю цену
   };
 
   // обработчик для пина
@@ -47,6 +43,7 @@
     var onPinMouseUp = function () {
       document.removeEventListener('mousemove', onPinMouseMove); // удаляем обработчик "движение мыши"
       document.removeEventListener('mouseup', onPinMouseUp); // удаляем обработчик "отпускание кнопки мыши"
+      window.getGoodsByPrice();
     };
     document.addEventListener('mousemove', onPinMouseMove); // запускаем обработчик "движение мыши"
     document.addEventListener('mouseup', onPinMouseUp); // запускаем обработчик "отпускание кнопки мыши"

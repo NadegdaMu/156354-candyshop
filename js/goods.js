@@ -50,14 +50,52 @@
       fragment.appendChild(renderItemCard(element, index));
     });
     goods.appendChild(fragment);
+  };
 
+  window.globalRenderGoods = function (list) {
+    var fragment = document.createDocumentFragment();
+    list.forEach(function (element, index) {
+      fragment.appendChild(renderItemCard(element, window.products.indexOf(element)));
+    });
+    goods.textContent = '';
+    goods.appendChild(fragment);
+    window.buttonFavoriteCollection();
+    window.basket.buttonSelectionCollection();
   };
 
   window.products = [];
 
+  var getMaxPrice = function () {
+    var expensive = window.products.slice().sort(function (left, right) {
+      return right.price - left.price;
+    });
+
+    return expensive[0].price;
+  };
+
+  var getMinPrice = function () {
+    var expensive = window.products.slice().sort(function (left, right) {
+      return left.price-right.price;
+    });
+
+    return expensive[0].price;
+  };
+
+  var renderPrices = function () {
+    window.MAXPRICE = getMaxPrice();
+    window.MINPRICE = getMinPrice();
+    document.querySelector('.range__price--min').textContent = window.MINPRICE;
+    document.querySelector('.range__price--max').textContent = window.MAXPRICE;
+    document.querySelector('.range__count').textContent = '(' + window.products.length + ')';
+  }
+
   var successHandler = function (serverdata) {
     window.products = serverdata;
+    window.products.forEach(function (el) {
+      el.favorite = 0;
+    });
     renderGoods(window.products);
+    renderPrices();
     window.buttonFavoriteCollection();
     window.basket.buttonSelectionCollection();
     window.sortGoods();
