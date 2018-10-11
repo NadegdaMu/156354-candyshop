@@ -75,19 +75,19 @@
 
   var getMinPrice = function () {
     var expensive = window.products.slice().sort(function (left, right) {
-      return left.price-right.price;
+      return left.price - right.price;
     });
 
     return expensive[0].price;
   };
 
   var renderPrices = function () {
-    window.MAXPRICE = getMaxPrice();
-    window.MINPRICE = getMinPrice();
-    document.querySelector('.range__price--min').textContent = window.MINPRICE;
-    document.querySelector('.range__price--max').textContent = window.MAXPRICE;
+    window.utils.MAXPRICE = getMaxPrice();
+    window.utils.MINPRICE = getMinPrice();
+    document.querySelector('.range__price--min').textContent = window.utils.MINPRICE;
+    document.querySelector('.range__price--max').textContent = window.utils.MAXPRICE;
     document.querySelector('.range__count').textContent = '(' + window.products.length + ')';
-  }
+  };
 
   var successHandler = function (serverdata) {
     window.products = serverdata;

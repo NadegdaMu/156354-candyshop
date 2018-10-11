@@ -3,6 +3,8 @@
 (function () {
 
   window.utils = {
+    MAXPRICE: 1500,
+    MINPRICE: 0,
     // Функция возвращающая случайный елемент массива
     getRandomItem: function (array) {
       var randomIndex = array[Math.floor(Math.random() * (array.length))];
@@ -28,22 +30,7 @@
         i++;
       }
       return productComposition;
-    },
-
-    debounce: function (fun) {
-      var lastTimeout = null;
-
-      return function () {
-        var args = arguments;
-        if (lastTimeout) {
-          window.clearTimeout(lastTimeout);
-        }
-        lastTimeout = window.setTimeout(function () {
-          fun.apply(null, args);
-        }, DEBOUNCE_INTERVAL);
-      }
     }
   };
-  window.MAXPRICE = 1500;
-  window.MINPRICE = 0;
+
 })();
