@@ -54,7 +54,7 @@
 
   window.globalRenderGoods = function (list) {
     var fragment = document.createDocumentFragment();
-    list.forEach(function (element, index) {
+    list.forEach(function (element) {
       fragment.appendChild(renderItemCard(element, window.products.indexOf(element)));
     });
     goods.textContent = '';
