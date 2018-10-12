@@ -80,10 +80,10 @@
   // Уменьшение кол-ва товара
   var decreasetItemCard = function (event) {
     var item = event.target.id;
-    if (window.shoppingСart[item].orderedAmount === 1) {
-      window.shoppingСart.splice(item, 1);
+    if (window.basket.shoppingСart[item].orderedAmount === 1) {
+      window.basket.shoppingСart.splice(item, 1);
     } else {
-      window.shoppingСart[item].orderedAmount -= 1;
+      window.basket.shoppingСart[item].orderedAmount -= 1;
     }
     window.basket.renderCardsInBasket();
   };

@@ -2,8 +2,6 @@
 
 (function () {
   var goods = document.querySelector('.catalog__cards');
-  document.querySelector('.catalog__cards').classList.remove('catalog__cards--load');
-  document.querySelector('.catalog__load').classList.add('visually-hidden');
   var catalogTemplate = document.querySelector('#card').content.querySelector('.catalog__card');
 
   // Функция, определящая какой класс выбирается в зависимости от рейтинга
@@ -41,6 +39,13 @@
     goodsElement.querySelector('.star__count').textContent = '(' + datasCard.rating.number + ')';
     goodsElement.querySelector('.card__characteristic').textContent = strokeNutritionFacts(datasCard);
     goodsElement.querySelector('.card__btn').setAttribute('id', id);
+    if (datasCard.amount > 5) {
+      goodsElement.classList.add('card__footer--available');
+    } else if (datasCard.amount > 1) {
+      goodsElement.classList.add('card__footer--little');
+    } else {
+      goodsElement.classList.add('card__footer--soon');
+    }
     return goodsElement;
   };
 
@@ -93,7 +98,10 @@
     window.products = serverdata;
     window.products.forEach(function (el) {
       el.favorite = 0;
+      el.filtered = 0;
     });
+    document.querySelector('.catalog__cards').classList.remove('catalog__cards--load');
+    document.querySelector('.catalog__load').classList.add('visually-hidden');
     renderGoods(window.products);
     renderPrices();
     window.buttonFavoriteCollection();
@@ -101,5 +109,5 @@
     window.sortGoods();
   };
 
-  window.backend.loadData(successHandler);
+  window.backend.loadData(successHandler, window.modals.showErrorModal);
 })();

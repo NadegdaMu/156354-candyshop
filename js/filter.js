@@ -20,7 +20,7 @@
 
   var calculatePrice = function (x) {
     var relativePositionInPercent = Math.round((x * 100) / (range - pinSize)); // вычисляю положение в % от начала
-    return Math.round((window.MAXPRICE - window.MINPRICE) * (relativePositionInPercent / 100) + window.MINPRICE); // вычисляю цену
+    return Math.round((window.utils.MAXPRICE - window.utils.MINPRICE) * (relativePositionInPercent / 100) + window.utils.MINPRICE); // вычисляю цену
   };
 
   // обработчик для пина
