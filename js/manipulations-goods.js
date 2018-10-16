@@ -11,8 +11,10 @@
       window.products[buttonTarget.nextElementSibling.id].favorite = 1;
     } else {
       window.products[buttonTarget.nextElementSibling.id].favorite = 0;
+
     }
     window.countFavorite();
+    window.globalRenderGoods(window.products);
   };
 
   window.buttonFavoriteCollection = function () {
@@ -20,5 +22,6 @@
     buttonCardFavorite.forEach(function (element) {
       element.addEventListener('click', buttonClickHandler);
     });
+
   };
 })();

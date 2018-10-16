@@ -19,12 +19,7 @@
 
   // Функция, возвращающая определеную строку в зависимости от булевого значения
   var strokeNutritionFacts = function (array) {
-    var strokeSugar = '';
-    if (array.nutritionFacts.sugar === true) {
-      strokeSugar = 'Содержит сахар';
-    }
-    strokeSugar = 'Без сахара';
-    return strokeSugar;
+    return array.nutritionFacts.sugar ? 'Содержит сахар' : 'Без сахара';
   };
 
   // Функция отрисовки карточки необычного товара
@@ -45,6 +40,12 @@
       goodsElement.classList.add('card__footer--little');
     } else {
       goodsElement.classList.add('card__footer--soon');
+    }
+    var button = goodsElement.querySelector('.card__btn-favorite');
+    if (datasCard.favorite === 1) {
+      button.classList.add('card__btn-favorite--selected');
+    } else {
+      button.classList.remove('card__btn-favorite--selected');
     }
     return goodsElement;
   };

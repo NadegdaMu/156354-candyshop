@@ -13,7 +13,6 @@
   // Функция которая копирует ссылку объекта с одно массива и помещает в другой объект
   var getNewProduct = function (id, selectedProduct) {
     var newProduct = Object.assign({}, selectedProduct);
-    // delete newProduct.amount;
     newProduct.orderedAmount = 1;
     newProduct.id = id;
     return newProduct;

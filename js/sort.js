@@ -209,8 +209,23 @@
 
   var filterClickHandler = function (event) {
     var currentFilter = event.target.htmlFor;
-    if (currentFilter === 'filter-availability' || currentFilter === 'filter-favorite') {
+    if (currentFilter === 'filter-availability') {
       filterList = [];
+      if (document.querySelector('#filter-favorite').checked === true) {
+        document.querySelector('#filter-favorite').checked = false;
+      }
+
+    } else if (currentFilter === 'filter-favorite') {
+      filterList = [];
+      if (document.querySelector('#filter-availability').checked === true) {
+        document.querySelector('#filter-availability').checked = false;
+      }
+    } else {
+      document.querySelector('#filter-favorite').checked = false;
+      document.querySelector('#filter-availability').checked = false;
+      if(document.querySelector('#' + currentFilter).checked === true) {
+        filterList = [];
+      }
     }
     if (filterList.length === 0) {
       filterList = filterMap[currentFilter](window.products);
@@ -220,9 +235,11 @@
 
     if (filterList.length === 0) {
       window.globalRenderGoods(filterList);
+
       emptyFilter();
     } else {
       window.globalRenderGoods(filterList);
+
     }
 
   };
@@ -240,9 +257,10 @@
     var rightPin = catalogFilterRange.querySelector('.range__btn--right');
     var rangeFillLine = catalogFilterRange.querySelector('.range__fill-line');
     var pinSize = 10;
+    var stepLeft = 235;
     // выставим начальные значения пина и бара;
     leftPin.style.left = 0;
-    rightPin.style.left = 235 + 'px';
+    rightPin.style.left = stepLeft + 'px';
     rangeFillLine.style.left = (leftPin.offsetLeft) + pinSize + 'px';
     rangeFillLine.style.right = pinSize + 'px';
     document.querySelector('.range__price--min').textContent = window.utils.MINPRICE;

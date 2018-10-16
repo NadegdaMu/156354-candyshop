@@ -32,7 +32,7 @@
       if (pin === leftPin && pinCurrent >= 0 && pinCurrent < rightPin.offsetLeft) { // если пин левый
         pin.style.left = pinCurrent + 'px';
         rangePriceMin.textContent = calculatePrice(pinCurrent);
-        rangeFillLine.style.left = (pinCurrent + 10) + 'px';
+        rangeFillLine.style.left = (pinCurrent + pinSize) + 'px';
       }
       if (pin === rightPin && pinCurrent > leftPin.offsetLeft && pinCurrent <= (range - pinSize)) { // если пин правый
         pin.style.left = pinCurrent + 'px';
