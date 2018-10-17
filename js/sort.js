@@ -172,11 +172,11 @@
   };
 
   var selectFiltered = function () {
-     var filteredList = window.products.filter(function (el) {
+    var filteredList = window.products.filter(function (el) {
       return el.filtered === 1;
     });
     return filteredList;
-  }
+  };
 
 
   window.countFavorite = function () {
@@ -218,7 +218,7 @@
   var filterClickHandler = function (event) {
     var currentFilter = event.target.htmlFor;
     if (currentFilter === 'filter-availability') {
-      filterList = filterMap[currentFilter](window.products);;
+      filterList = filterMap[currentFilter](window.products);
       if (document.querySelector('#filter-favorite').checked === true) {
         document.querySelector('#filter-favorite').checked = false;
       }
@@ -238,7 +238,7 @@
           document.querySelector('#' + el).checked = false;
         }
       });
-    } else if (currentFilter === 'filter-expensive' || currentFilter == 'filter-cheep' || currentFilter == 'filter-rating') {
+    } else if (currentFilter === 'filter-expensive' || currentFilter === 'filter-cheep' || currentFilter === 'filter-rating') {
       filterList = selectFiltered();
       if (filterList.length === 0) {
         filterList = filterMap[currentFilter](window.products);
@@ -250,7 +250,7 @@
     } else if (currentFilter === 'filter-popular') {
       window.products.forEach(function (el) {
         el.filtered = 0;
-      })
+      });
       filterList = window.products;
       Object.keys(filterMap).forEach(function (el) {
         if (el !== currentFilter) {
@@ -262,23 +262,20 @@
       document.querySelector('#filter-favorite').checked = false;
       document.querySelector('#filter-availability').checked = false;
       var flist = filterMap[currentFilter](window.products);
-      if(document.querySelector('#' + currentFilter).checked === true) {
+      if (document.querySelector('#' + currentFilter).checked === true) {
         flist.forEach(function (el) {
           el.filtered = 0;
-        })
+        });
       } else {
         flist.forEach(function (el) {
           el.filtered = 1;
-        })
+        });
       }
       filterList = selectFiltered();
       document.querySelector('#filter-popular').checked = false;
     }
 
-
-
     if (filterList.length === 0 && !nothingChecked()) {
-      window.product;
       document.querySelector('#filter-popular').checked = true;
       window.globalRenderGoods(window.products);
     } else if (filterList.length === 0 && nothingChecked()) {
@@ -297,7 +294,7 @@
       }
     });
     return flag;
-  }
+  };
 
   labelCollection.forEach(function (el) {
     el.addEventListener('click', filterClickHandler);
