@@ -106,7 +106,7 @@
   };
 
   // Функция Сначало популярные
-  var getPopulaGoods = function () {
+  var getPopularGoods = function () {
     return window.products;
   };
 
@@ -171,6 +171,14 @@
     return rating;
   };
 
+  var selectFiltered = function () {
+     var filteredList = window.products.filter(function (el) {
+      return el.filtered === 1;
+    });
+    return filteredList;
+  }
+
+
   window.countFavorite = function () {
     popula.favorite.nextElementSibling.nextElementSibling.textContent = '(' + countElementArray(getFavoriteGoods(window.products)) + ')';
   };
@@ -200,7 +208,7 @@
     'filter-gluten-free': getGlutenProdact,
     'filter-favorite': getFavoriteGoods,
     'filter-availability': getАmountGoods,
-    'filter-popular': getPopulaGoods,
+    'filter-popular': getPopularGoods,
     'filter-expensive': getExpensiveGoods,
     'filter-cheep': getCheapGoods,
     'filter-rating': filterByRating
@@ -210,39 +218,86 @@
   var filterClickHandler = function (event) {
     var currentFilter = event.target.htmlFor;
     if (currentFilter === 'filter-availability') {
-      filterList = [];
+      filterList = filterMap[currentFilter](window.products);;
       if (document.querySelector('#filter-favorite').checked === true) {
         document.querySelector('#filter-favorite').checked = false;
       }
+      Object.keys(filterMap).forEach(function (el) {
+        if (el !== currentFilter) {
+          document.querySelector('#' + el).checked = false;
+        }
+      });
 
     } else if (currentFilter === 'filter-favorite') {
-      filterList = [];
+      filterList = filterMap[currentFilter](window.products);
       if (document.querySelector('#filter-availability').checked === true) {
         document.querySelector('#filter-availability').checked = false;
       }
+      Object.keys(filterMap).forEach(function (el) {
+        if (el !== currentFilter) {
+          document.querySelector('#' + el).checked = false;
+        }
+      });
+    } else if (currentFilter === 'filter-expensive' || currentFilter == 'filter-cheep' || currentFilter == 'filter-rating') {
+      filterList = selectFiltered();
+      if (filterList.length === 0) {
+        filterList = filterMap[currentFilter](window.products);
+      } else {
+        filterList = filterMap[currentFilter](filterList);
+      }
+      document.querySelector('#filter-favorite').checked = false;
+      document.querySelector('#filter-availability').checked = false;
+    } else if (currentFilter === 'filter-popular') {
+      window.products.forEach(function (el) {
+        el.filtered = 0;
+      })
+      filterList = window.products;
+      Object.keys(filterMap).forEach(function (el) {
+        if (el !== currentFilter) {
+          document.querySelector('#' + el).checked = false;
+        }
+      });
+
     } else {
       document.querySelector('#filter-favorite').checked = false;
       document.querySelector('#filter-availability').checked = false;
+      var flist = filterMap[currentFilter](window.products);
       if(document.querySelector('#' + currentFilter).checked === true) {
-        filterList = [];
+        flist.forEach(function (el) {
+          el.filtered = 0;
+        })
+      } else {
+        flist.forEach(function (el) {
+          el.filtered = 1;
+        })
       }
-    }
-    if (filterList.length === 0) {
-      filterList = filterMap[currentFilter](window.products);
-    } else {
-      filterList = filterMap[currentFilter](filterList);
+      filterList = selectFiltered();
+      document.querySelector('#filter-popular').checked = false;
     }
 
-    if (filterList.length === 0) {
+
+
+    if (filterList.length === 0 && !nothingChecked()) {
+      window.product;
+      document.querySelector('#filter-popular').checked = true;
+      window.globalRenderGoods(window.products);
+    } else if (filterList.length === 0 && nothingChecked()) {
       window.globalRenderGoods(filterList);
-
       emptyFilter();
     } else {
       window.globalRenderGoods(filterList);
-
     }
-
   };
+
+  var nothingChecked = function () {
+    var flag = true;
+    Object.keys(filterMap).forEach(function (el) {
+      if (document.querySelector('#' + el).checked === true) {
+        flag = false;
+      }
+    });
+    return flag;
+  }
 
   labelCollection.forEach(function (el) {
     el.addEventListener('click', filterClickHandler);

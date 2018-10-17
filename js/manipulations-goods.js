@@ -14,7 +14,13 @@
 
     }
     window.countFavorite();
-    window.globalRenderGoods(window.products);
+    var getFavoriteGoods = function (array) {
+      var favor = array.filter(function (el) {
+        return el.favorite === 1;
+      });
+    return favor;
+    };
+    window.globalRenderGoods(getFavoriteGoods(window.products));
   };
 
   window.buttonFavoriteCollection = function () {
